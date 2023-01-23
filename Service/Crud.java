@@ -136,4 +136,22 @@ public class Crud {
         return found;
     }
 
+    public static List<List<String>> dataToArray(){
+        File file = new File("data/todos.csv");
+        List<List<String>> items = new ArrayList<>();
+
+        try {
+            Scanner reader = new Scanner(file);
+            while (reader.hasNextLine()) {
+
+                String line = reader.nextLine();
+                items.add(Arrays.asList(line.split(",")));
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return items;
+    }
+
 }
