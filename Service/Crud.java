@@ -113,4 +113,27 @@ public class Crud {
         }
     }
 
+    public static boolean verify(String name ) {
+
+        File file = new File("data/todos.csv");
+        boolean found = false;
+
+        try {
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String firstParam = line.split(",")[0];
+                if (firstParam.contentEquals(name)) {
+                    found= true;
+                }
+            }
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return found;
+    }
+
 }
