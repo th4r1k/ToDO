@@ -2,6 +2,7 @@ package Service;
 
 import Entity.Todo;
 import java.io.*;
+import java.util.*;
 
 
 public class Crud {
@@ -24,6 +25,19 @@ public class Crud {
             pw.append("\n");
 
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void read() {
+        File file = new File("data/todos.csv");
+        try {
+            Scanner reader = new Scanner(file);
+            while (reader.hasNextLine()) {
+                System.out.println(reader.nextLine());
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
