@@ -222,5 +222,37 @@ public class Crud {
             throw new RuntimeException(e);
         }
     }
+    
+    public static void count(){
+        File file = new File("data/todos.csv");
+        int todo =0;
+        int doing=0;
+        int done=0;
+
+        try {
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String firstParam = line.split(",")[5];
+                if (firstParam.equals("todo")) {
+                    todo++;
+                }
+                else if(firstParam.equals("doing")){
+                    doing++;
+                }
+                else if(firstParam.equals("done")) {
+                    done++;
+                }
+            }
+            System.out.println("itens a fazer(ToDo): " + todo);
+            System.out.println("itens em andamento(Doing): " + doing);
+            System.out.println("itens concluidos(Done): " + done);
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
