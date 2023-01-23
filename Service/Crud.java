@@ -202,4 +202,25 @@ public class Crud {
         }
     }
 
+    public static void search(String collumn, String name) {
+
+        File file = new File("data/todos.csv");
+
+        try {
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String firstParam = line.split(",")[Integer.parseInt(collumn)];
+                if (firstParam.contains(name)) {
+                    System.out.println(line);
+                }
+            }
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
