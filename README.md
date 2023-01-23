@@ -11,6 +11,10 @@ A simple JAVA crud with .csv persistance
 - Organize;
 - Order;
 
+### Requisites
+
+Java 8+
+
 ### Installing
 
 Clone or download files
@@ -22,13 +26,12 @@ Inside the main path run:
     java Main
     
 
-Add additional notes to deploy this on a live system
-
 ## Built With
 
+  - Java
+  - .csv files
   - Git Flow
  
-
 ## Authors
 
   - *Tharik Honda* -
