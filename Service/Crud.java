@@ -3,6 +3,9 @@ package Service;
 import Entity.Todo;
 import java.io.*;
 import java.util.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 public class Crud {
@@ -69,7 +72,7 @@ public class Crud {
                         }
                     }
                     pw.append("\n");
-//
+
                 }
             }
             reader.close();
@@ -109,6 +112,145 @@ public class Crud {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean verify(String name ) {
+
+        File file = new File("data/todos.csv");
+        boolean found = false;
+
+        try {
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String firstParam = line.split(",")[0];
+                if (firstParam.contentEquals(name)) {
+                    found= true;
+                }
+            }
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return found;
+    }
+
+    public static List<List<String>> dataToArray(){
+        File file = new File("data/todos.csv");
+        List<List<String>> items = new ArrayList<>();
+
+        try {
+            Scanner reader = new Scanner(file);
+            while (reader.hasNextLine()) {
+
+                String line = reader.nextLine();
+                items.add(Arrays.asList(line.split(",")));
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return items;
+    }
+
+    public static void sorter(String coluna){
+        File file = new File("data/todos.csv");
+        File tempfile = new File("data/temptodos.csv");
+
+        List<List<String>> items = dataToArray();
+        items.remove(0);
+        Collections.sort(items, new Comparator<List<String>>() {
+            DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+            @Override
+            public int compare(List<String> list1, List<String> list2) {
+                if ((!coluna.equals("2"))){
+                return list1.get(Integer.parseInt(coluna)).toLowerCase().compareTo(list2.get(Integer.parseInt(coluna)).toLowerCase());
+            }
+                else {
+                    try {
+                        return dateFormat.parse(list1.get(Integer.parseInt(coluna))).compareTo(dateFormat.parse(list2.get(Integer.parseInt(coluna))));
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+
+        });
+        try {
+            FileWriter pw = new FileWriter(tempfile, true);
+            pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "Priority" + "," + "Category" + "," + "Status");
+            pw.append("\n");
+
+            for(int i=0 ; i<items.size() ; i++){
+                for (int j=0 ; j<items.get(i).size() ; j++){
+                    pw.write(items.get(i).get(j));
+                    if(j!= items.get(i).size()-1)
+                    pw.write(",");
+                }
+                pw.append("\n");
+            }
+            pw.close();
+            file.delete();
+            tempfile.renameTo(file);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void search(String collumn, String name) {
+
+        File file = new File("data/todos.csv");
+
+        try {
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String firstParam = line.split(",")[Integer.parseInt(collumn)];
+                if (firstParam.contains(name)) {
+                    System.out.println(line);
+                }
+            }
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public static void count(){
+        File file = new File("data/todos.csv");
+        int todo =0;
+        int doing=0;
+        int done=0;
+
+        try {
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String firstParam = line.split(",")[5];
+                if (firstParam.equals("todo")) {
+                    todo++;
+                }
+                else if(firstParam.equals("doing")){
+                    doing++;
+                }
+                else if(firstParam.equals("done")) {
+                    done++;
+                }
+            }
+            System.out.println("itens a fazer(ToDo): " + todo);
+            System.out.println("itens em andamento(Doing): " + doing);
+            System.out.println("itens concluidos(Done): " + done);
+            reader.close();
+
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
