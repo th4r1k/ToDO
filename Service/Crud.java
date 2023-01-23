@@ -41,6 +41,48 @@ public class Crud {
             throw new RuntimeException(e);
         }
     }
+
+    public static void update(String name, int field, String newData) {
+        File file = new File("data/todos.csv");
+        File tempfile = new File("data/temptodos.csv");
+        try {
+            FileWriter pw = new FileWriter(tempfile, true);
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String[] allParams = line.split(",");
+                String firstParam = allParams[0];
+                if (!firstParam.equals(name)) {
+                    pw.write(line);
+                    pw.append("\n");
+                } else {
+                    for (int i = 0; i <= 5; i++) {
+
+                        if (i == field) {
+                            pw.write(newData);
+                            pw.append(",");
+
+                        } else {
+                            pw.write(allParams[i]);
+                            pw.append(",");
+                        }
+                    }
+                    pw.append("\n");
+//
+                }
+            }
+            reader.close();
+            pw.close();
+            file.delete();
+            tempfile.renameTo(file);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     
     public static void delete(String name) {
 
@@ -70,4 +112,5 @@ public class Crud {
             throw new RuntimeException(e);
         }
     }
+
 }
