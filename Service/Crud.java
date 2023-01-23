@@ -42,4 +42,32 @@ public class Crud {
         }
     }
     
+    public static void delete(String name) {
+
+        File file = new File("data/todos.csv");
+        File tempfile = new File("data/temptodos.csv");
+        try {
+            FileWriter pw = new FileWriter(tempfile, true);
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String firstParam = line.split(",")[0];
+                if (!firstParam.equalsIgnoreCase(name)) {
+//                if(!line.contains(name)){
+                    pw.write(line);
+                    pw.append("\n");
+                }
+            }
+            reader.close();
+            pw.close();
+            file.delete();
+            tempfile.renameTo(file);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
