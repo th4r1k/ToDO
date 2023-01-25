@@ -148,9 +148,17 @@ public class Start {
                         field = input.nextLine();
                     }
                     String newdata;
+                    
+                    if(field.equals("0")){
+                    System.out.println("Insira o novo valor:");
+                     newdata = input.nextLine();
+                       if (Crud.verify(newdata)) {
+                            System.out.println("________________________________");
+                            System.out.println("Tarefa ja existe");
+                            goBack();
+                        }
 
-                    if (field.equals("2"))
-                    {
+                    }else if (field.equals("2")){
                     System.out.println("Insira o novo valor:");
                      newdata = input.nextLine();
 
