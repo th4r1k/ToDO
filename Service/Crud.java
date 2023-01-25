@@ -6,6 +6,7 @@ import java.util.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class Crud {
@@ -16,12 +17,13 @@ public class Crud {
         try (FileWriter pw = new FileWriter(file, true)) {
 
             if (file.length() == 0) {
-                pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "Priority" + "," + "Category" + "," + "Status");
+                pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "EndTime" + "," + "Priority" + "," + "Category" + "," + "Status");
                 pw.append("\n");
             }
             pw.write(todo.getName() + ",");
             pw.write(todo.getDescription() + ",");
             pw.write(todo.getEndDate() + ",");
+            pw.write(todo.getEndTime() + ",");
             pw.write(todo.getPriority() + ",");
             pw.write(todo.getCategory() + ",");
             pw.write(todo.getStatus());
@@ -45,6 +47,7 @@ public class Crud {
         }
     }
 
+
     public static void update(String name, int field, String newData) {
         File file = new File("data/todos.csv");
         File tempfile = new File("data/temptodos.csv");
@@ -60,15 +63,24 @@ public class Crud {
                     pw.write(line);
                     pw.append("\n");
                 } else {
-                    for (int i = 0; i <= 5; i++) {
+                    for (int i = 0; i <= 6; i++) {
 
                         if (i == field) {
-                            pw.write(newData);
-                            pw.append(",");
+                            if (i == 6){
+                                pw.write(newData);
+                            } else {
+                                pw.write(newData);
+                                pw.append(",");
+                            }
 
                         } else {
-                            pw.write(allParams[i]);
-                            pw.append(",");
+                            if (i == 6){
+                                pw.write(allParams[i]);
+                            } else {
+                                pw.write(allParams[i]);
+                                pw.append(",");
+                            }
+                           
                         }
                     }
                     pw.append("\n");
@@ -80,6 +92,8 @@ public class Crud {
             file.delete();
             tempfile.renameTo(file);
 
+          
+
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -87,6 +101,7 @@ public class Crud {
         }
     }
     
+
     public static void delete(String name) {
 
         File file = new File("data/todos.csv");
@@ -104,6 +119,7 @@ public class Crud {
                     pw.append("\n");
                 }
             }
+            
             reader.close();
             pw.close();
             file.delete();
@@ -115,6 +131,7 @@ public class Crud {
             throw new RuntimeException(e);
         }
     }
+
 
     public static boolean verify(String name ) {
 
@@ -139,6 +156,7 @@ public class Crud {
         return found;
     }
 
+
     public static List<List<String>> dataToArray(){
         File file = new File("data/todos.csv");
         List<List<String>> items = new ArrayList<>();
@@ -156,6 +174,7 @@ public class Crud {
         }
         return items;
     }
+
 
     public static void sorter(String coluna){
         File file = new File("data/todos.csv");
@@ -182,7 +201,7 @@ public class Crud {
         });
         try {
             FileWriter pw = new FileWriter(tempfile, true);
-            pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "Priority" + "," + "Category" + "," + "Status");
+            pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "EndTime" + "," + "Priority" + "," + "Category" + "," + "Status");
             pw.append("\n");
 
             for(int i=0 ; i<items.size() ; i++){
@@ -201,6 +220,7 @@ public class Crud {
             throw new RuntimeException(e);
         }
     }
+
 
     public static void search(String collumn, String name) {
 
@@ -222,6 +242,7 @@ public class Crud {
             throw new RuntimeException(e);
         }
     }
+
     
     public static void count(){
         File file = new File("data/todos.csv");
@@ -234,7 +255,7 @@ public class Crud {
 
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
-                String firstParam = line.split(",")[5];
+                String firstParam = line.split(",")[6];
                 if (firstParam.equals("todo")) {
                     todo++;
                 }
@@ -255,4 +276,243 @@ public class Crud {
         }
     }
 
+
+    public static void createAlarm( String name, String dateAlarm, String timeAlarm){
+
+        File file = new File("data/todos.csv");
+        String endDate = "" ;
+        String endTime = "" ;
+        String priority = "" ;
+
+        try {
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String firstParam = line.split(",")[0];
+                if (firstParam.contentEquals(name)) {
+                    
+                    endDate = line.split(",")[2];
+                    endTime = line.split(",")[3];
+                    priority = line.split(",")[4];
+                }
+            }
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        File alarmFile = new File("data/alarms.csv");
+        try (FileWriter pw = new FileWriter(alarmFile, true)) {
+
+
+            if (alarmFile.length() == 0) {
+                pw.write("ToDo`s Name" + "," + "AlarmDate" + "," + "AlarmTime" + "," + "EndDate"+ "," + "EndTime" + "," + "Priority");
+                pw.append("\n");
+            }
+            if (!(endDate.equals("")))
+            pw.write(name + ",");
+            pw.write(dateAlarm + ",");
+            pw.write(timeAlarm + ",");
+            pw.write(endDate + ",");
+            pw.write(endTime + ",");
+            pw.write(priority);
+            pw.append("\n");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void readAlarms() {
+        File file = new File("data/alarms.csv");
+        try {
+            Scanner reader = new Scanner(file);
+            while (reader.hasNextLine()) {
+                System.out.println(reader.nextLine());
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void deleteAlarm(String name) {
+
+        File file = new File("data/alarms.csv");
+        File tempfile = new File("data/tempalarms.csv");
+        try {
+            FileWriter pw = new FileWriter(tempfile, true);
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String firstParam = line.split(",")[0];
+                if (!firstParam.equalsIgnoreCase(name)) {
+                    pw.write(line);
+                    pw.append("\n");
+                }
+            }
+
+            reader.close();
+            pw.close();
+            file.delete();
+            tempfile.renameTo(file);
+                             
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static boolean verifyAlarm(String name ) {
+
+        File file = new File("data/alarms.csv");
+        boolean found = false;
+
+        try {
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String firstParam = line.split(",")[0];
+                if (firstParam.contentEquals(name)) {
+                    found= true;
+                }
+            }
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return found;
+    }
+
+
+    public static void updateAlarm(String name, int todoField, String newData) {
+        File file = new File("data/alarms.csv");
+        File tempfile = new File("data/tempalarms.csv");
+        int fieldToEdit = 0;
+
+        if(todoField == 2){
+            fieldToEdit = 3;
+        }
+        else if(todoField == 3){
+            fieldToEdit = 4;
+        }
+        else if(todoField == 4){
+            fieldToEdit = 5;
+        }
+
+        try {
+            FileWriter pw = new FileWriter(tempfile, true);
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String[] allParams = line.split(",");
+                String firstParam = allParams[0];
+                if (!firstParam.equals(name)) {
+                    pw.write(line);
+                    pw.append("\n");
+                } else {
+                    for (int i = 0; i <= 5; i++) {
+
+                        if (i == fieldToEdit) {
+                            if(i==5){
+                                pw.write(newData);
+
+                            }
+                            else{
+                                pw.write(newData);
+                                pw.append(",");
+                            }
+                        }
+                        else {
+                            if(i==5){
+                            pw.write(allParams[i]);
+                            }
+                            else{
+                                pw.write(allParams[i]);
+                                pw.append(",");
+                            }
+                        }
+                    }
+                    pw.append("\n");
+
+                }
+            }
+            reader.close();
+            pw.close();
+            file.delete();
+            tempfile.renameTo(file);
+                       
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void alarm(){ 
+
+        File file = new File("data/alarms.csv");
+        Date date = new Date();
+        String today = new SimpleDateFormat("dd/MM/yyyy").format(date);
+        String timeNow = new SimpleDateFormat("HH:mm").format(date);
+        
+        try {
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                if (!(line.equals("ToDo`s Name,AlarmDate,AlarmTime,EndDate,EndTime,Priority"))){
+                    String todoName = line.split(",")[0];
+                    String dateAlarm = line.split(",")[1];
+                    String timeAlarm = line.split(",")[2];
+                    String dateEnd = line.split(",")[3];
+                    String timeEnd = line.split(",")[4];
+    
+                        if(dateEnd.equals(today) & new SimpleDateFormat("HH:mm").parse(timeNow).after(new SimpleDateFormat("HH:mm").parse(timeEnd))){
+                        reader.close();
+                        deleteAlarm((todoName));
+                        System.out.println("********************ALARME*******************");
+                        System.out.println("O alarme da tarefa: '" +  todoName + "' foi removido pois ja passou a data de termino" );
+                        System.out.println("********************ALARME*******************");
+                        break;
+                    } else if(new SimpleDateFormat("dd/MM/yyyy").parse(today).after(new SimpleDateFormat("dd/MM/yyyy").parse(dateEnd))){
+                        reader.close();
+                        deleteAlarm((todoName));
+                        System.out.println("********************ALARME*******************");
+                        System.out.println("O alarme da tarefa: '" + todoName + "' foi removido pois ja passou a data de termino" );
+                        System.out.println("********************ALARME*******************");
+                        break;
+    
+                    } else if (dateAlarm.equals(today) & new SimpleDateFormat("HH:mm").parse(timeNow).after(new SimpleDateFormat("HH:mm").parse(timeAlarm))) {
+                        System.out.println("********************ALARME*******************");
+                        System.out.println("A tarefa:" + " " + line.split(",")[0] + ", " + "Data de termino" + " " + line.split(",")[3] + " " + "as: " + line.split(",")[4]);
+                        System.out.println("********************ALARME*******************");
+    
+                    } 
+                }
+            }
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Houve um problema ao criar o arquivo alarms.csv");
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (NoSuchElementException e) {
+            System.out.println("Houve um problema ao criar o arquivo alarms.csv");
+        throw new RuntimeException(e);
+        } 
+    }
 }

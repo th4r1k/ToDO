@@ -4,6 +4,7 @@ public class Todo {
     String name;
     String description;
     String endDate;
+    String endTime;
     String priority;
     String category;
     String status;
@@ -11,10 +12,11 @@ public class Todo {
     public Todo() {
     }
 
-    public Todo(String name, String description, String endDate, String priority, String category, String status) {
+    public Todo(String name, String description, String endDate, String endTime, String priority, String category, String status) {
         this.name = name;
         this.description = description;
         this.endDate = endDate;
+        this.endTime = endTime;
         this.priority = priority;
         this.category = category;
         this.status = status;
@@ -42,6 +44,14 @@ public class Todo {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getEndTime() {
+        return this.endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endDate = endTime;
     }
 
     public String getPriority() {

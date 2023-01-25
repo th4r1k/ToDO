@@ -1,3 +1,4 @@
+import Service.Crud;
 import utils.Persist;
 import utils.Start;
 
@@ -6,6 +7,7 @@ public class Main {
 
         Persist.createFiles();
         System.out.println("*** Bem vindo ao ToDoApp ***");
+        Crud.alarm();
         Start.menu();
 
     }
