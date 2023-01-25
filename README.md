@@ -4,12 +4,15 @@ A simple JAVA crud with .csv persistance
 
 ## Features
 
-- Create;
-- Edit;
+- Create: Each ToDo have a unique name(can not be duplicated), data must be in dd/mm/yyyy format, time must be in HH:mm format, priority (1-5), status(ToDo,Doing,Done(case insensitive)) ;
+- Edit: All fields are editable;
 - Delete;
-- Search;
-- Organize;
-- Order;
+- Search: Choose a field and search for some value;
+- Order: Choose a field and order data in Asc order;
+- Info: Show ToDo status of all data; 
+- Create Alarm;
+- Delete Alarm;
+
 
 ### Requisites
 
