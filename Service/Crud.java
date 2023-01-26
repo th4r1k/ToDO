@@ -507,12 +507,12 @@ public class Crud {
 
         } catch (FileNotFoundException e) {
             System.out.println("Houve um problema ao criar o arquivo alarms.csv");
-            throw new RuntimeException(e);
+            // throw new RuntimeException(e);
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (NoSuchElementException e) {
             System.out.println("Houve um problema ao criar o arquivo alarms.csv");
-        throw new RuntimeException(e);
+        // throw new RuntimeException(e);
         } 
     }
 }
