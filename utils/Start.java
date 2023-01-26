@@ -198,6 +198,13 @@ public class Start {
                             System.out.println("Qual o nivel de prioridade?");
                             newdata = input.nextLine();
                         }
+                    }else if (field.equals("6")){
+                        System.out.println("Insira o novo valor:");
+                     newdata = input.nextLine().toLowerCase();
+                    while (!(newdata.equals("todo") || newdata.equals("doing") || newdata.equals("done"))) {
+                        System.out.println("Qual o Status (ToDo,Doing,Done):");
+                        newdata = input.nextLine().toLowerCase();
+                        }
                     }
                     else{
                         System.out.println("Insira o novo valor:");
