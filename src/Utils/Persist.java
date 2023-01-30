@@ -1,10 +1,9 @@
-package utils;
+package src.Utils;
 
 import java.io.File;
 import java.io.IOException;
-
 public class Persist {
-       public static void createFiles() {
+    public static void createFiles() {
         try {
             File path = new File("data");
             path.mkdir();
@@ -12,13 +11,13 @@ public class Persist {
             File alarms = new File("data/alarms.csv");
             if (todos.createNewFile()) {
                 System.out.println("File created: " + todos.getName());
-            } 
+            }
             // else {
             //     System.out.println("File already exists.");
             // }
             if (alarms.createNewFile()) {
                 System.out.println("File created: " + alarms.getName());
-            } 
+            }
             // else {
             //     System.out.println("File already exists.");
             // }
@@ -26,8 +25,5 @@ public class Persist {
             System.out.println("An error occurred.");
             // e.printStackTrace();
         }
-
     }
-    
-    
 }
