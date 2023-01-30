@@ -24,9 +24,9 @@ Clone or download files
 
 Inside the main path run:
 
-    javac -d . Main.java
+    javac -d . src.Main.java
 
-    java Main
+    java src.Main
     
 
 ## Built With
