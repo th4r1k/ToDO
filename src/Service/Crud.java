@@ -1,6 +1,7 @@
-package Service;
+package src.Service;
 
-import Entity.Todo;
+import src.Entity.Todo;
+
 import java.io.*;
 import java.util.*;
 import java.text.DateFormat;
@@ -66,7 +67,7 @@ public class Crud {
                     for (int i = 0; i <= 6; i++) {
 
                         if (i == field) {
-                            if (i == 6){
+                            if (i == 6) {
                                 pw.write(newData);
                             } else {
                                 pw.write(newData);
@@ -74,13 +75,13 @@ public class Crud {
                             }
 
                         } else {
-                            if (i == 6){
+                            if (i == 6) {
                                 pw.write(allParams[i]);
                             } else {
                                 pw.write(allParams[i]);
                                 pw.append(",");
                             }
-                           
+
                         }
                     }
                     pw.append("\n");
@@ -92,7 +93,6 @@ public class Crud {
             file.delete();
             tempfile.renameTo(file);
 
-          
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -100,7 +100,7 @@ public class Crud {
             throw new RuntimeException(e);
         }
     }
-    
+
 
     public static void delete(String name) {
 
@@ -119,7 +119,7 @@ public class Crud {
                     pw.append("\n");
                 }
             }
-            
+
             reader.close();
             pw.close();
             file.delete();
@@ -133,7 +133,7 @@ public class Crud {
     }
 
 
-    public static boolean verify(String name ) {
+    public static boolean verify(String name) {
 
         File file = new File("data/todos.csv");
         boolean found = false;
@@ -145,7 +145,7 @@ public class Crud {
                 String line = reader.nextLine();
                 String firstParam = line.split(",")[0];
                 if (firstParam.contentEquals(name)) {
-                    found= true;
+                    found = true;
                 }
             }
             reader.close();
@@ -157,7 +157,7 @@ public class Crud {
     }
 
 
-    public static List<List<String>> dataToArray(){
+    public static List<List<String>> dataToArray() {
         File file = new File("data/todos.csv");
         List<List<String>> items = new ArrayList<>();
 
@@ -176,7 +176,7 @@ public class Crud {
     }
 
 
-    public static void sorter(String coluna){
+    public static void sorter(String coluna) {
         File file = new File("data/todos.csv");
         File tempfile = new File("data/temptodos.csv");
 
@@ -184,12 +184,12 @@ public class Crud {
         items.remove(0);
         Collections.sort(items, new Comparator<List<String>>() {
             DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+
             @Override
             public int compare(List<String> list1, List<String> list2) {
-                if ((!coluna.equals("2"))){
-                return list1.get(Integer.parseInt(coluna)).toLowerCase().compareTo(list2.get(Integer.parseInt(coluna)).toLowerCase());
-            }
-                else {
+                if ((!coluna.equals("2"))) {
+                    return list1.get(Integer.parseInt(coluna)).toLowerCase().compareTo(list2.get(Integer.parseInt(coluna)).toLowerCase());
+                } else {
                     try {
                         return dateFormat.parse(list1.get(Integer.parseInt(coluna))).compareTo(dateFormat.parse(list2.get(Integer.parseInt(coluna))));
                     } catch (ParseException e) {
@@ -204,11 +204,11 @@ public class Crud {
             pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "EndTime" + "," + "Priority" + "," + "Category" + "," + "Status");
             pw.append("\n");
 
-            for(int i=0 ; i<items.size() ; i++){
-                for (int j=0 ; j<items.get(i).size() ; j++){
+            for (int i = 0; i < items.size(); i++) {
+                for (int j = 0; j < items.get(i).size(); j++) {
                     pw.write(items.get(i).get(j));
-                    if(j!= items.get(i).size()-1)
-                    pw.write(",");
+                    if (j != items.get(i).size() - 1)
+                        pw.write(",");
                 }
                 pw.append("\n");
             }
@@ -243,12 +243,12 @@ public class Crud {
         }
     }
 
-    
-    public static void count(){
+
+    public static void count() {
         File file = new File("data/todos.csv");
-        int todo =0;
-        int doing=0;
-        int done=0;
+        int todo = 0;
+        int doing = 0;
+        int done = 0;
 
         try {
             Scanner reader = new Scanner(file);
@@ -258,11 +258,9 @@ public class Crud {
                 String firstParam = line.split(",")[6];
                 if (firstParam.equals("todo")) {
                     todo++;
-                }
-                else if(firstParam.equals("doing")){
+                } else if (firstParam.equals("doing")) {
                     doing++;
-                }
-                else if(firstParam.equals("done")) {
+                } else if (firstParam.equals("done")) {
                     done++;
                 }
             }
@@ -277,7 +275,7 @@ public class Crud {
     }
 
 
-    public static void createAlarm( String name, String dateAlarm, String timeAlarm){
+    public static void createAlarm(String name, String dateAlarm, String timeAlarm) {
 
         File file = new File("data/todos.csv");
         String endDate = "" ;
@@ -291,7 +289,7 @@ public class Crud {
                 String line = reader.nextLine();
                 String firstParam = line.split(",")[0];
                 if (firstParam.contentEquals(name)) {
-                    
+
                     endDate = line.split(",")[2];
                     endTime = line.split(",")[3];
                     priority = line.split(",")[4];
@@ -308,11 +306,11 @@ public class Crud {
 
 
             if (alarmFile.length() == 0) {
-                pw.write("ToDo`s Name" + "," + "AlarmDate" + "," + "AlarmTime" + "," + "EndDate"+ "," + "EndTime" + "," + "Priority");
+                pw.write("ToDo`s Name" + "," + "AlarmDate" + "," + "AlarmTime" + "," + "EndDate" + "," + "EndTime" + "," + "Priority");
                 pw.append("\n");
             }
             if (!(endDate.equals("")))
-            pw.write(name + ",");
+                pw.write(name + ",");
             pw.write(dateAlarm + ",");
             pw.write(timeAlarm + ",");
             pw.write(endDate + ",");
@@ -361,7 +359,7 @@ public class Crud {
             pw.close();
             file.delete();
             tempfile.renameTo(file);
-                             
+
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -370,7 +368,7 @@ public class Crud {
     }
 
 
-    public static boolean verifyAlarm(String name ) {
+    public static boolean verifyAlarm(String name) {
 
         File file = new File("data/alarms.csv");
         boolean found = false;
@@ -382,7 +380,7 @@ public class Crud {
                 String line = reader.nextLine();
                 String firstParam = line.split(",")[0];
                 if (firstParam.contentEquals(name)) {
-                    found= true;
+                    found = true;
                 }
             }
             reader.close();
@@ -399,13 +397,11 @@ public class Crud {
         File tempfile = new File("data/tempalarms.csv");
         int fieldToEdit = 0;
 
-        if(todoField == 2){
+        if (todoField == 2) {
             fieldToEdit = 3;
-        }
-        else if(todoField == 3){
+        } else if (todoField == 3) {
             fieldToEdit = 4;
-        }
-        else if(todoField == 4){
+        } else if (todoField == 4) {
             fieldToEdit = 5;
         }
 
@@ -424,20 +420,17 @@ public class Crud {
                     for (int i = 0; i <= 5; i++) {
 
                         if (i == fieldToEdit) {
-                            if(i==5){
+                            if (i == 5) {
                                 pw.write(newData);
 
-                            }
-                            else{
+                            } else {
                                 pw.write(newData);
                                 pw.append(",");
                             }
-                        }
-                        else {
-                            if(i==5){
-                            pw.write(allParams[i]);
-                            }
-                            else{
+                        } else {
+                            if (i == 5) {
+                                pw.write(allParams[i]);
+                            } else {
                                 pw.write(allParams[i]);
                                 pw.append(",");
                             }
@@ -451,7 +444,7 @@ public class Crud {
             pw.close();
             file.delete();
             tempfile.renameTo(file);
-                       
+
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -461,58 +454,58 @@ public class Crud {
     }
 
 
-    public static void alarm(){ 
+    public static void alarm() {
 
         File file = new File("data/alarms.csv");
         Date date = new Date();
         String today = new SimpleDateFormat("dd/MM/yyyy").format(date);
         String timeNow = new SimpleDateFormat("HH:mm").format(date);
-        
+
         try {
             Scanner reader = new Scanner(file);
 
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
-                if (!(line.equals("ToDo`s Name,AlarmDate,AlarmTime,EndDate,EndTime,Priority"))){
+                if (!(line.equals("ToDo`s Name,AlarmDate,AlarmTime,EndDate,EndTime,Priority"))) {
                     String todoName = line.split(",")[0];
                     String dateAlarm = line.split(",")[1];
                     String timeAlarm = line.split(",")[2];
                     String dateEnd = line.split(",")[3];
                     String timeEnd = line.split(",")[4];
-    
-                        if(dateEnd.equals(today) & new SimpleDateFormat("HH:mm").parse(timeNow).after(new SimpleDateFormat("HH:mm").parse(timeEnd))){
+
+                    if (dateEnd.equals(today) & new SimpleDateFormat("HH:mm").parse(timeNow).after(new SimpleDateFormat("HH:mm").parse(timeEnd))) {
                         reader.close();
                         deleteAlarm((todoName));
                         System.out.println("********************ALARME*******************");
-                        System.out.println("O alarme da tarefa: '" +  todoName + "' foi removido pois ja passou a data de termino" );
+                        System.out.println("O alarme da tarefa: '" + todoName + "' foi removido pois ja passou a data de termino");
                         System.out.println("********************ALARME*******************");
                         break;
-                    } else if(new SimpleDateFormat("dd/MM/yyyy").parse(today).after(new SimpleDateFormat("dd/MM/yyyy").parse(dateEnd))){
+                    } else if (new SimpleDateFormat("dd/MM/yyyy").parse(today).after(new SimpleDateFormat("dd/MM/yyyy").parse(dateEnd))) {
                         reader.close();
                         deleteAlarm((todoName));
                         System.out.println("********************ALARME*******************");
-                        System.out.println("O alarme da tarefa: '" + todoName + "' foi removido pois ja passou a data de termino" );
+                        System.out.println("O alarme da tarefa: '" + todoName + "' foi removido pois ja passou a data de termino");
                         System.out.println("********************ALARME*******************");
                         break;
-    
+
                     } else if (dateAlarm.equals(today) & new SimpleDateFormat("HH:mm").parse(timeNow).after(new SimpleDateFormat("HH:mm").parse(timeAlarm))) {
                         System.out.println("********************ALARME*******************");
                         System.out.println("A tarefa:" + " " + line.split(",")[0] + ", " + "Data de termino" + " " + line.split(",")[3] + " " + "as: " + line.split(",")[4]);
                         System.out.println("********************ALARME*******************");
-    
-                    } 
+
+                    }
                 }
             }
             reader.close();
 
         } catch (FileNotFoundException e) {
             System.out.println("Houve um problema ao criar o arquivo alarms.csv");
-            throw new RuntimeException(e);
+            // throw new RuntimeException(e);
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (NoSuchElementException e) {
             System.out.println("Houve um problema ao criar o arquivo alarms.csv");
-        throw new RuntimeException(e);
-        } 
+            // throw new RuntimeException(e);
+        }
     }
 }

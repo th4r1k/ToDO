@@ -1,4 +1,4 @@
-package Entity;
+package src.Entity;
 
 public class Todo {
     String name;
@@ -79,6 +79,7 @@ public class Todo {
     }
 
     public String toString() {
-        return "Todo{name='" + this.name + "', description='" + this.description + "', endDate='" + this.endDate + "', priority=" + this.priority + ", category='" + this.category + "', status=" + this.status + "}";
+        // return "Todo{name='" + this.name + "', description='" + this.description + "', endDate='" + this.endDate + "', priority=" + this.priority + ", category='" + this.category + "', status=" + this.status + "}";
+        return this.name + "," + this.description + ", " + this.endDate + "," + this.priority + ",'" + this.category + "'," + this.status;
     }
 }
