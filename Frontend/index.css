@@ -66,7 +66,6 @@ select {
 @media (max-width: 730px) {
   #todoTable {
     font-size: 0.8rem;
-  
   }
 }
 
@@ -76,7 +75,8 @@ select {
   }
 }
 
-.modalAdd, .modalEdt {
+.modalAdd,
+.modalEdt {
   display: none;
   position: fixed;
   z-index: 1;
@@ -88,7 +88,8 @@ select {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modalAdd .content, .modalEdt .content {
+.modalAdd .content,
+.modalEdt .content {
   background-color: gray;
   margin: 15% auto;
   padding: 1rem;
@@ -104,9 +105,26 @@ select {
   color: var(--title);
 }
 
-.modalAdd .content input , .modalEdt .content input {
+.modalAdd .content input,
+.modalEdt .content input {
   border-radius: 0.2rem;
   border-width: thin;
   text-align: center;
   background-color: lightgray;
+}
+
+#multipleChange {
+  padding: 0.1rem;
+  border-radius: 0.3rem;
+  font-weight: bold;
+  color: black;
+  background-color: #f4d47c;
+  border-color: #848588;
+  border-width: thin;
+}
+
+#multipleOptions {
+  background-color: #f4d47c;
+  font-weight: bold;
+  color: black;
 }
