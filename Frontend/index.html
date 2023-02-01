@@ -1,0 +1,116 @@
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoApp</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <nav class="">
+        <h1>ToDoApp</h1>
+    </nav>
+
+    <div class="options">
+        <button class="addBtn">Adicionar</button>
+        <button class="edtBtn">Editar</button>
+        <button class="delBtn" disabled>Deletar</button>
+       
+        <select id="filter">
+            <option value="Sem filtro">Sem filtro</option>
+            <option value="todo">todo</option>
+            <option value="doing">doing</option>
+            <option value="done">done</option>
+        </select>
+    </div>
+
+    <table id="todoTable" border="1">
+        <thead>
+            <tr>
+                <th>Nome</td>
+                <th>Descrição</td>
+                <th>Data de Término</td>
+                <th>Horário de Término</td>
+                <th>Prioridade</td>
+                <th>Categoria</td>
+                <th>Status</td>
+            </tr>
+        </thead>
+    </table>
+
+    <div class="modalAdd">
+        <div class="content">
+            <h1>Criar nova Tarefa</h1>
+
+            <label>Nome</label>
+            <input id="name" type="text" autocomplete="off" />
+
+            <label>Descrição</label>
+            <input id="description" type="text" autocomplete="off" />
+
+            <label>Data de Término</label>
+            <input id="endDate" type="date" />
+
+            <label>Horário de Término</label>
+            <input id="endTime" type="time" />
+
+            <label>Prioridade</label>
+            <input placeholder="Precisa ser um numeral" id="priority" type="number" max="5" />
+
+            <label>Categoria</label>
+            <input id="category" type="text" />
+
+            <label>Status</label>
+            <select id="status">
+                <option value="todo">todo</option>
+                <option value="doing">doing</option>
+                <option value="done">done</option>
+            </select>
+            <br>
+            <button class="addTodo" onclick="add()">Adicionar</button>
+            <small>(Para cancelar clique fora da janela do modal)</small>
+
+        </div>
+    </div>
+
+    <div class="modalEdt">
+        <div class="content">
+            <h1>Editar Tarefa</h1>
+
+            <label>Nome</label>
+            <input id="editName" type="text" disabled />
+
+            <label>Descrição</label>
+            <input id="editDescription" type="text" autocomplete="off" />
+
+            <label>Data de Término</label>
+            <input id="editendDate" type="date" />
+
+            <label>Horário de Término</label>
+            <input id="editendTime" type="time" />
+
+            <label>Prioridade</label>
+            <input placeholder="Precisa ser um numeral" id="editpriority" type="number" max="5" />
+
+            <label>Categoria</label>
+            <input id="editcategory" type="text" />
+
+            <label>Status</label>
+            <select id="editStatus">
+                <option value="todo">todo</option>
+                <option value="doing">doing</option>
+                <option value="done">done</option>
+            </select>
+            <br>
+            <button class="edtTodo" onclick="update()">Editar</button>
+            <small>(Para cancelar clique fora da janela do modal)</small>
+
+        </div>
+    </div>
+
+    <script src="index.js"> </script>
+</body>
+
+</html>

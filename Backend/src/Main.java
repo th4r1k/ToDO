@@ -1,9 +1,9 @@
-package src;
+package Backend.src;
 
-import src.Service.Crud;
-import src.Service.Test.CrudTest;
-import src.Utils.Persist;
-import src.Utils.Menu.Start;
+import Backend.src.Service.Crud;
+import Backend.src.Service.Test.CrudTest;
+import Backend.src.Utils.Persist;
+import Backend.src.Utils.Menu.Start;
 
 public class Main {
     public static void main(String[] args) {

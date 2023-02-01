@@ -1,13 +1,13 @@
-package src.Service.Test;
-
-import src.Entity.Todo;
-import src.Service.Crud;
+package Backend.src.Service.Test;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import Backend.src.Entity.Todo;
+import Backend.src.Service.Crud;
 
 
 public class CrudTest {

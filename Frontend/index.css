@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #23262d;
+}
+
+nav {
+  background-color: #1a232c;
+  color: white;
+  padding: 2rem;
+  border-bottom: thin solid #848588;
+  text-align: center;
+  width: 100%;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+  gap: 1rem;
+  font-weight: bolder;
+  color: white;
+}
+
+button {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  font-weight: bold;
+  color: black;
+  border-color: #848588;
+  border-width: thin;
+}
+
+select {
+  background-color: gray;
+  border-radius: 0.3rem;
+}
+
+.addBtn,
+.addTodo {
+  background-color: #194b32;
+}
+
+.edtBtn {
+  background-color: #e45826;
+}
+
+.delBtn {
+  background-color: #960018;
+}
+
+#todoTable {
+  margin: auto;
+  align-items: center;
+  border-color: #848588;
+  background-color: #1a232c;
+  color: gray;
+  border-radius: 1rem;
+  width: 80%;
+  text-align: center;
+}
+
+@media (max-width: 730px) {
+  #todoTable {
+    font-size: 0.8rem;
+  
+  }
+}
+
+@media (max-width: 420px) {
+  #todoTable {
+    font-size: 0.7rem;
+  }
+}
+
+.modalAdd, .modalEdt {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modalAdd .content, .modalEdt .content {
+  background-color: gray;
+  margin: 15% auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 50%;
+  gap: 0.3rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-family: "LexendDeca-Regular";
+  color: var(--title);
+}
+
+.modalAdd .content input , .modalEdt .content input {
+  border-radius: 0.2rem;
+  border-width: thin;
+  text-align: center;
+  background-color: lightgray;
+}
