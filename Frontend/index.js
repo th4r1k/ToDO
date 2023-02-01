@@ -145,11 +145,10 @@ function renderTodos(todolist) {
       <td> ${todo.category} </td>
       <td> ${todo.status}</td>
       <td>
-       <button class="edtBtn" onclick=editTodo(this) /> <button class="delBtn" onclick=delTodo(${todo.name.replace(
+       <button class="edtBtn" onclick=editTodo(this) > Editar </button> <button class="delBtn" onclick=delTodo(${todo.name.replace(
          /\s/g,
          ""
-       )}) />
-       
+       )}) > Deletar </button>
       </td>
       <td><input class=${todo.name.replace(/\s/g, "")} type="checkbox"/> </td>
       </tr> `;
@@ -174,6 +173,8 @@ const editTodo = function (td) {
   editpriority.value = selectedRow.cells[4].innerText;
   editcategory.value = selectedRow.cells[5].innerHTML;
   editStatus.value = selectedRow.cells[6].innerText;
+
+  switchedtModal();
 };
 
 function update() {
@@ -200,7 +201,6 @@ function update() {
 
     todos.forEach((todo) => {
       if (todo.name == editName.value.trim()) {
-        console.log("entrou aqui");
         todo.description = editDescription.value;
         todo.endDate = editendDate.value;
         todo.endTime = editendTime.value;
@@ -209,7 +209,6 @@ function update() {
         todo.status = editStatus.options[editStatus.options.selectedIndex].text;
       }
     });
-    console.log(todos);
 
     localStorage.setItem("todoList", JSON.stringify(todos));
     renderTodos(todos);
@@ -227,10 +226,10 @@ const cleanFilter = () => {
 const filter = () => {
   cleanFilter();
   for (let i = 0; i < tr.length; i++) {
-    const td = tr[i].getElementsByTagName("td")[6];
+    const statusSelected = tr[i].getElementsByTagName("td")[6];
 
-    if (td) {
-      if (itemToFilter.value == td.innerText) {
+    if (statusSelected) {
+      if (itemToFilter.value == statusSelected.innerText) {
         tr[i].style.display = "";
       } else {
         tr[i].style.display = "none";
