@@ -21,6 +21,9 @@ const itemToFilter = document.getElementById("filter");
 const tr = table.getElementsByTagName("tr");
 const insertDataIntoTable = document.getElementById("insertDataIntoTable");
 
+multipleOptions = document.getElementById("multipleOptions");
+multipleChange = document.getElementById("multipleChange");
+
 let todos = [];
 
 if (localStorage.getItem("todoList")) {
@@ -133,6 +136,7 @@ function renderTodos(todolist) {
   insertDataIntoTable.innerHTML = "";
   todolist.forEach((todo) => {
     insertDataIntoTable.innerHTML += `<tr id=${todo.name.replace(/\s/g, "")}>
+    
       <td> ${todo.name} </td>
       <td> ${todo.description} </td>
       <td> ${todo.endDate} </td>
@@ -140,10 +144,14 @@ function renderTodos(todolist) {
       <td> ${todo.priority} </td>
       <td> ${todo.category} </td>
       <td> ${todo.status}</td>
-      <td> <button class="edtBtn" onclick=editTodo(this) /> <button class="delBtn" onclick=delTodo(${todo.name.replace(
-        /\s/g,
-        ""
-      )}) /></td>
+      <td>
+       <button class="edtBtn" onclick=editTodo(this) /> <button class="delBtn" onclick=delTodo(${todo.name.replace(
+         /\s/g,
+         ""
+       )}) />
+       
+      </td>
+      <td><input class=${todo.name.replace(/\s/g, "")} type="checkbox"/> </td>
       </tr> `;
   });
 }
@@ -244,6 +252,19 @@ const verifyTodoExists = (name) => {
     });
   }
   return isOk;
+};
+
+const changeMany = () => {
+  todos.forEach((todo) => {
+    if (document.getElementsByClassName(todo.name)[0].checked) {
+      if (multipleOptions.value != 0) {
+        todo.status = multipleOptions.value;
+      }
+    }
+  });
+  localStorage.setItem("todoList", JSON.stringify(todos));
+  renderTodos(todos);
+  multipleOptions.value = 0;
 };
 
 itemToFilter.addEventListener("change", filter);

@@ -29,13 +29,23 @@
     <table id="todoTable" border="1">
         <thead>
             <tr>
-                <th>Nome</td>
-                <th>Descrição</td>
-                <th>Data de Término</td>
-                <th>Horário de Término</td>
-                <th>Prioridade</td>
-                <th>Categoria</td>
-                <th>Status</td>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Data de Término</th>
+                <th>Horário de Término</th>
+                <th>Prioridade</th>
+                <th>Categoria</th>
+                <th>Status</th>
+                <th>
+                    <select id="multipleOptions">
+
+                        <option value=0>Altera selecionados</option>
+                        <option value="todo">todo</option>
+                        <option value="doing">doing</option>
+                        <option value="done">done</option>
+                    </select>
+                </th>
+                <th><button id="multipleChange" onclick="changeMany()">Aplicar</button></th>
             </tr>
         </thead>
         <tbody id="insertDataIntoTable">
