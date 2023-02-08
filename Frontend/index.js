@@ -10,6 +10,7 @@ const editName = document.getElementById("editName");
 const editDescription = document.getElementById("editDescription");
 const editendDate = document.getElementById("editendDate");
 const editendTime = document.getElementById("editendTime");
+
 const editpriority = document.getElementById("editpriority");
 const editcategory = document.getElementById("editcategory");
 const editStatus = document.getElementById("editStatus");
@@ -96,7 +97,7 @@ const verifyEditClick = () => {
 };
 
 const edtBtn = document.querySelector(".edtBtn");
-edtBtn.addEventListener("click", verifyEditClick);
+edtBtn?.addEventListener("click", verifyEditClick);
 
 const add = function () {
   if (
