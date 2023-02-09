@@ -101,35 +101,38 @@ edtBtn?.addEventListener("click", verifyEditClick);
 
 const add = function () {
   if (
-    name.value == "" ||
-    description.value == "" ||
-    endDate.value == "" ||
-    endTime.value == "" ||
-    priority.value == "" ||
-    category.value == ""
+    validadeTask(
+      name.value,
+      description.value,
+      endDate.value,
+      endTime.value,
+      priority.value,
+      category.value,
+      status
+    )
   ) {
-    alert("Campos não podem ficar em branco");
-  } else if (!verifyTodoExists(name.value)) {
-    alert("Tarefa ja existe!");
-  } else {
-    const statusOption = status.options[status.selectedIndex].text;
-    const todo = {
-      name: name.value.replace(/\s/g, ""),
-      description: description.value,
-      endDate: endDate.value,
-      endTime: endTime.value,
-      priority: priority.value,
-      category: category.value,
-      status: statusOption,
-    };
+    if (!verifyTodoExists(name.value)) {
+      alert("Tarefa ja existe!");
+    } else {
+      const statusOption = status.options[status.selectedIndex].text;
+      const todo = {
+        name: name.value.replace(/\s/g, ""),
+        description: description.value,
+        endDate: endDate.value,
+        endTime: endTime.value,
+        priority: priority.value,
+        category: category.value,
+        status: statusOption,
+      };
 
-    todos.push(todo);
+      todos.push(todo);
 
-    localStorage.setItem("todoList", JSON.stringify(todos));
+      localStorage.setItem("todoList", JSON.stringify(todos));
 
-    clearEditFields();
-    renderTodos(todos);
-    addModal.style.display = "none";
+      clearEditFields();
+      renderTodos(todos);
+      addModal.style.display = "none";
+    }
   }
 };
 
@@ -166,7 +169,6 @@ const delTodo = function (item) {
 
 const editTodo = function (td) {
   selectedRow = td.parentElement.parentElement;
-
   editName.value = selectedRow.cells[0].innerHTML;
   editDescription.value = selectedRow.cells[1].innerHTML;
   editendDate.value = selectedRow.cells[2].innerText;
@@ -180,14 +182,16 @@ const editTodo = function (td) {
 
 function update() {
   if (
-    editDescription.value == "" ||
-    editendDate.value == "" ||
-    editendTime.value == "" ||
-    editpriority.value == "" ||
-    editcategory.value == ""
+    validadeTask(
+      editName.value,
+      editDescription.value,
+      editendDate.value,
+      editendTime.value,
+      editpriority.value,
+      editcategory.value,
+      editStatus
+    )
   ) {
-    alert("Campos não podem ficar em branco");
-  } else {
     selectedRow.cells[1].innerHTML = editDescription.value;
     selectedRow.cells[2].innerText = editendDate.value;
     selectedRow.cells[3].innerText = editendTime.value;
@@ -196,9 +200,6 @@ function update() {
     selectedRow.cells[6].innerText =
       editStatus.options[editStatus.options.selectedIndex].text;
     edtModal.style.display = "none";
-    if (editStatus.options[editStatus.options.selectedIndex].text == "") {
-      alert("Campos não podem ficar em branco");
-    }
 
     todos.forEach((todo) => {
       if (todo.name == editName.value.trim()) {
@@ -268,3 +269,54 @@ const changeMany = () => {
 };
 
 itemToFilter.addEventListener("change", filter);
+
+const nameRegex = /[A-z]{4,15}/;
+const priorityRegex = /[1-5]/;
+const categoryRegex = /[A-z]{4,15}/;
+const descriptionRegex = /[A-z]{4,15}/;
+
+function validadeTask(
+  name,
+  description,
+  endDate,
+  endTime,
+  priority,
+  category,
+  status
+) {
+  let isOk = false;
+  const today = new Date();
+  const endDateTime = endDate + "T" + endTime;
+  const taskEndDate = new Date(endDateTime);
+
+  if (
+    name == "" ||
+    description == "" ||
+    endDate == "" ||
+    endTime == "" ||
+    priority == "" ||
+    category == ""
+  ) {
+    alert("Campos não podem ficar em branco");
+  } else if (!nameRegex.test(name)) {
+    alert("Nome precisa possuir de 4-15 digitos alfanuméricos");
+  } else if (!descriptionRegex.test(description)) {
+    alert("Descrição precisa possuir de 4-15 digitos alfanuméricos");
+  } else if (!priorityRegex.test(priority)) {
+    alert("A prioridade precisa ser de 1 a 5");
+  } else if (!categoryRegex.test(category)) {
+    alert("Categoria pode apenas possuir de 4-15 digitos alfanuméricos");
+  } else if (status.options[status.selectedIndex].text != undefined) {
+    if (
+      status.options[status.selectedIndex].text !== "done" &&
+      taskEndDate < today
+    ) {
+      alert(
+        "Data de término não pode ser anterior a hoje para tarefas com status a fazer(toDo) ou fazendo(doing)"
+      );
+    } else {
+      isOk = true;
+    }
+  }
+  return isOk;
+}
