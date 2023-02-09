@@ -55,10 +55,10 @@
             <h1>Criar nova Tarefa</h1>
 
             <label>Nome</label>
-            <input id="name" type="text" autocomplete="off" />
+            <input id="name" type="text" autocomplete="off" maxlength="15" pattern="[A-z]{4,15}" />
 
             <label>Descrição</label>
-            <input id="description" type="text" autocomplete="off" />
+            <input id="description" type="text" autocomplete="off" pattern="[A-z]{4,15}" />
 
             <label>Data de Término</label>
             <input id="endDate" type="date" />
@@ -67,10 +67,10 @@
             <input id="endTime" type="time" />
 
             <label>Prioridade</label>
-            <input placeholder="Precisa ser um numeral" id="priority" type="number" max="5" />
+            <input placeholder="Precisa ser um numeral" id="priority" type="number" min="1" max="5" />
 
             <label>Categoria</label>
-            <input id="category" type="text" />
+            <input id="category" type="text" maxlength="15" pattern="[A-z]{4,15}" />
 
             <label>Status</label>
             <select id="status">
@@ -90,10 +90,10 @@
             <h1>Editar Tarefa</h1>
 
             <label>Nome</label>
-            <input id="editName" type="text" disabled />
+            <input id="editName" type="text" disabled maxlength="15" pattern="[A-z]{4,15}" />
 
             <label>Descrição</label>
-            <input id="editDescription" type="text" autocomplete="off" />
+            <input id="editDescription" type="text" autocomplete="off" pattern="[A-z]{4,15}" />
 
             <label>Data de Término</label>
             <input id="editendDate" type="date" />
@@ -102,10 +102,10 @@
             <input id="editendTime" type="time" />
 
             <label>Prioridade</label>
-            <input placeholder="Precisa ser um numeral" id="editpriority" type="number" max="5" />
+            <input placeholder="Precisa ser um numeral" id="editpriority" type="number" min="1" max="5" />
 
             <label>Categoria</label>
-            <input id="editcategory" type="text" />
+            <input id="editcategory" type="text" maxlength="15" pattern="[A-z]{4,15}" />
 
             <label>Status</label>
             <select id="editStatus">
