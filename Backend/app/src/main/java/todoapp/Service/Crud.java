@@ -1,4 +1,4 @@
-package Backend.src.Service;
+package todoapp.Service;
 
 import java.io.*;
 import java.util.*;
@@ -7,7 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import Backend.src.Entity.Todo;
+import todoapp.Entity.Todo;
 
 
 public class Crud {

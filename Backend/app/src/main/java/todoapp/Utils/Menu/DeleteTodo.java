@@ -1,9 +1,9 @@
-package Backend.src.Utils.Menu;
+package todoapp.Utils.Menu;
 
 
 import java.util.Scanner;
 
-import Backend.src.Service.Crud;
+import todoapp.Service.Crud;
 public class DeleteTodo {
 
     public static void menu() {
