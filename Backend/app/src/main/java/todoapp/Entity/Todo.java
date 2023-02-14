@@ -1,4 +1,4 @@
-package Backend.src.Entity;
+package todoapp.Entity;
 
 public class Todo {
     String name;
