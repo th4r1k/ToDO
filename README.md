@@ -17,24 +17,24 @@ A simple JAVA crud with .csv persistance
 
 ### Requisites
 
-Java 8+
+  - Java 8+;
+  - Gradle
 
 ### Installing
 
 Clone or download files
 
-Inside the main path run:
+Inside the Backend path run:
 
-    javac -d . src.Main.java
-
-    java src.Main
+    gradle run
     
 
 ## Built With
 
   - Java
   - .csv files
-  - Git Flow
+  - Gradle
+  
  
  
  # Frontend
