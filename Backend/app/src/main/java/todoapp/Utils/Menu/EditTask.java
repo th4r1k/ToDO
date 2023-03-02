@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import todoapp.Service.Crud;
 
-public class EditTodo {
+public class EditTask {
     public static void menu() {
 
         Crud.read();

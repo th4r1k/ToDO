@@ -17,7 +17,6 @@ public class CreateAlarm {
             System.out.println("Campo nao pode ficar vazio");
             System.out.println("Nome da tarefa para criar alarme:");
             itemToAddAlarm = input.nextLine();
-//                    goBack();
         }
         if (!Crud.verify(itemToAddAlarm)) {
             System.out.println("Tarefa nao encontrada");

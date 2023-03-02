@@ -26,7 +26,7 @@ public class Start {
         switch (data) {
 
             case "1":
-                CreateTodo.menu();
+                CreateTask.menu();
                 break;
 
             case "2": {
@@ -37,19 +37,19 @@ public class Start {
             }
 
             case "3":
-                EditTodo.menu();
+                EditTask.menu();
                 break;
 
             case "4":
-                DeleteTodo.menu();
+                DeleteTask.menu();
                 break;
 
             case "5":
-                OrderTodo.menu();
+                OrderTask.menu();
                 break;
 
             case "6":
-                FindTodo.menu();
+                FindTask.menu();
                 break;
 
             case "7": {

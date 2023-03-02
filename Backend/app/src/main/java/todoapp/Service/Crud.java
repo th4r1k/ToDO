@@ -7,27 +7,26 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import todoapp.Entity.Todo;
-
+import todoapp.Entity.Task;
 
 public class Crud {
 
-    public static void create(Todo todo) {
+    public static void create(Task task) {
 
-        File file = new File("data/todos.csv");
+        File file = new File("data/tasks.csv");
         try (FileWriter pw = new FileWriter(file, true)) {
 
             if (file.length() == 0) {
                 pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "EndTime" + "," + "Priority" + "," + "Category" + "," + "Status");
                 pw.append("\n");
             }
-            pw.write(todo.getName() + ",");
-            pw.write(todo.getDescription() + ",");
-            pw.write(todo.getEndDate() + ",");
-            pw.write(todo.getEndTime() + ",");
-            pw.write(todo.getPriority() + ",");
-            pw.write(todo.getCategory() + ",");
-            pw.write(todo.getStatus());
+            pw.write(task.getName() + ",");
+            pw.write(task.getDescription() + ",");
+            pw.write(task.getEndDate() + ",");
+            pw.write(task.getEndTime() + ",");
+            pw.write(task.getPriority() + ",");
+            pw.write(task.getCategory() + ",");
+            pw.write(task.getStatus());
             pw.append("\n");
 
         } catch (IOException e) {
@@ -36,7 +35,7 @@ public class Crud {
     }
 
     public static void read() {
-        File file = new File("data/todos.csv");
+        File file = new File("data/tasks.csv");
         try {
             Scanner reader = new Scanner(file);
             while (reader.hasNextLine()) {
@@ -50,8 +49,8 @@ public class Crud {
 
 
     public static void update(String name, int field, String newData) {
-        File file = new File("data/todos.csv");
-        File tempfile = new File("data/temptodos.csv");
+        File file = new File("data/tasks.csv");
+        File tempfile = new File("data/temptasks.csv");
         try {
             FileWriter pw = new FileWriter(tempfile, true);
             Scanner reader = new Scanner(file);
@@ -73,7 +72,6 @@ public class Crud {
                                 pw.write(newData);
                                 pw.append(",");
                             }
-
                         } else {
                             if (i == 6) {
                                 pw.write(allParams[i]);
@@ -81,7 +79,6 @@ public class Crud {
                                 pw.write(allParams[i]);
                                 pw.append(",");
                             }
-
                         }
                     }
                     pw.append("\n");
@@ -104,8 +101,8 @@ public class Crud {
 
     public static void delete(String name) {
 
-        File file = new File("data/todos.csv");
-        File tempfile = new File("data/temptodos.csv");
+        File file = new File("data/tasks.csv");
+        File tempfile = new File("data/temptasks.csv");
         try {
             FileWriter pw = new FileWriter(tempfile, true);
             Scanner reader = new Scanner(file);
@@ -114,7 +111,6 @@ public class Crud {
                 String line = reader.nextLine();
                 String firstParam = line.split(",")[0];
                 if (!firstParam.equalsIgnoreCase(name)) {
-//                if(!line.contains(name)){
                     pw.write(line);
                     pw.append("\n");
                 }
@@ -135,7 +131,7 @@ public class Crud {
 
     public static boolean verify(String name) {
 
-        File file = new File("data/todos.csv");
+        File file = new File("data/tasks.csv");
         boolean found = false;
 
         try {
@@ -149,7 +145,6 @@ public class Crud {
                 }
             }
             reader.close();
-
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -158,7 +153,7 @@ public class Crud {
 
 
     public static List<List<String>> dataToArray() {
-        File file = new File("data/todos.csv");
+        File file = new File("data/tasks.csv");
         List<List<String>> items = new ArrayList<>();
 
         try {
@@ -177,8 +172,8 @@ public class Crud {
 
 
     public static void sorter(String coluna) {
-        File file = new File("data/todos.csv");
-        File tempfile = new File("data/temptodos.csv");
+        File file = new File("data/tasks.csv");
+        File tempfile = new File("data/temptasks.csv");
 
         List<List<String>> items = dataToArray();
         items.remove(0);
@@ -224,7 +219,7 @@ public class Crud {
 
     public static void search(String collumn, String name) {
 
-        File file = new File("data/todos.csv");
+        File file = new File("data/tasks.csv");
 
         try {
             Scanner reader = new Scanner(file);
@@ -245,7 +240,7 @@ public class Crud {
 
 
     public static void count() {
-        File file = new File("data/todos.csv");
+        File file = new File("data/tasks.csv");
         int todo = 0;
         int doing = 0;
         int done = 0;
@@ -277,7 +272,7 @@ public class Crud {
 
     public static void createAlarm(String name, String dateAlarm, String timeAlarm) {
 
-        File file = new File("data/todos.csv");
+        File file = new File("data/tasks.csv");
         String endDate = "" ;
         String endTime = "" ;
         String priority = "" ;
@@ -289,7 +284,6 @@ public class Crud {
                 String line = reader.nextLine();
                 String firstParam = line.split(",")[0];
                 if (firstParam.contentEquals(name)) {
-
                     endDate = line.split(",")[2];
                     endTime = line.split(",")[3];
                     priority = line.split(",")[4];

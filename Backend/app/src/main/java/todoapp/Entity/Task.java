@@ -1,6 +1,6 @@
 package todoapp.Entity;
 
-public class Todo {
+public class Task {
     String name;
     String description;
     String endDate;
@@ -9,10 +9,10 @@ public class Todo {
     String category;
     String status;
 
-    public Todo() {
+    public Task() {
     }
 
-    public Todo(String name, String description, String endDate, String endTime, String priority, String category, String status) {
+    public Task(String name, String description, String endDate, String endTime, String priority, String category, String status) {
         this.name = name;
         this.description = description;
         this.endDate = endDate;

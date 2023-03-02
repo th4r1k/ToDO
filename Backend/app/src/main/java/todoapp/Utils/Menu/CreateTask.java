@@ -4,10 +4,10 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import todoapp.Entity.Todo;
+import todoapp.Entity.Task;
 import todoapp.Service.Crud;
 
-public class CreateTodo {
+public class CreateTask {
 
     public static void menu() {
 
@@ -83,8 +83,8 @@ public class CreateTodo {
                 status = input.nextLine().toLowerCase();
             }
 
-            Todo todo = new Todo(name, description, endDate, endTime, priority, category, status);
-            Crud.create(todo);
+            Task task = new Task(name, description, endDate, endTime, priority, category, status);
+            Crud.create(task);
             Crud.sorter("4");
 
             System.out.println("________________________________");

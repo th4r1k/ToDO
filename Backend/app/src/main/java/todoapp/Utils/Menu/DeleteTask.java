@@ -4,7 +4,7 @@ package todoapp.Utils.Menu;
 import java.util.Scanner;
 
 import todoapp.Service.Crud;
-public class DeleteTodo {
+public class DeleteTask {
 
     public static void menu() {
         Scanner input = new Scanner(System.in);
