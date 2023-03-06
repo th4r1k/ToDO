@@ -1,8 +1,14 @@
-package todoapp.Utils.Menu;
+package todoapp.View;
 
+import java.io.File;
 import java.util.Scanner;
 
-import todoapp.Service.Crud;
+import todoapp.Controller.AlarmController;
+import todoapp.Controller.CrudTaskController;
+import todoapp.Controller.TaskController;
+import todoapp.Service.AlarmTaskService;
+import todoapp.Service.CrudTaskService;
+import todoapp.Service.TaskService;
 
 public class Start {
     public static void menu() {
@@ -22,66 +28,57 @@ public class Start {
         System.out.println("Digite o codigo do comando: ");
         Scanner input = new Scanner(System.in);
         String data = input.nextLine();
+        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskService());
+        AlarmController alarmController = new AlarmController(new AlarmTaskService());
+        TaskController taskController = new TaskController(new TaskService());
+        File file = new File("data/tasks.csv");
+        File alarmFile = new File("data/alarms.csv");
 
         switch (data) {
-
             case "1":
-                CreateTask.menu();
+                CreateTaskView.menu();
                 break;
-
             case "2": {
                 System.out.println("________________________________");
-                Crud.read();
+                crudTaskController.readAllTasks(file);
                 goBack();
                 break;
             }
-
             case "3":
-                EditTask.menu();
+                EditTaskView.menu();
                 break;
-
             case "4":
-                DeleteTask.menu();
+                DeleteTaskView.menu();
                 break;
-
             case "5":
-                OrderTask.menu();
+                OrderTaskView.menu();
                 break;
-
             case "6":
-                FindTask.menu();
+                FindTaskView.menu();
                 break;
-
             case "7": {
-                Crud.count();
+                taskController.countTasks(file);
                 goBack();
                 break;
             }
-
             case "8": {
-                CreateAlarm.menu();
+                CreateAlarmView.menu();
                 break;
             }
-
             case "9": {
                 System.out.println("________________________________");
-                Crud.readAlarms();
+                alarmController.readAlarms(alarmFile);
                 goBack();
                 break;
-
             }
-
             case "10":
-                DeleteAlarm.menu();
+                DeleteAlarmView.menu();
                 break;
-
-
             case "0": {
                 input.close();
                 System.out.println("Volte sempre!");
                 break;
             }
-
             default:
                 System.out.println("Opcao invalida");
                 menu();
@@ -89,18 +86,15 @@ public class Start {
     }
 
     public static void goBack() {
-
         System.out.println("");
         System.out.println("________________________________");
         System.out.println("Digite 1 para voltar ao menu");
         Scanner input = new Scanner(System.in);
         String data = input.nextLine();
-
         switch (data) {
             case "1":
                 menu();
                 break;
-
             default:
                 input.close();
                 break;

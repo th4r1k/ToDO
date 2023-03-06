@@ -1,13 +1,19 @@
-package todoapp.Utils.Menu;
+package todoapp.View;
 
+import java.io.File;
 import java.util.Scanner;
 
-import todoapp.Service.Crud;
+import todoapp.Controller.TaskController;
+import todoapp.Service.TaskService;
+import todoapp.Utils.Regex;
 
-public class FindTask {
+public class FindTaskView {
 
     public static void menu() {
         Scanner input = new Scanner(System.in);
+        File file = new File("data/tasks.csv");
+
+        TaskController taskController = new TaskController(new TaskService());
         System.out.println("Pesquisar por:");
         System.out.println("0- Nome da tarefa");
         System.out.println("1- Descricao");
@@ -19,22 +25,23 @@ public class FindTask {
         System.out.println("7- Voltar");
         System.out.println("Digite o codigo:");
 
-        String collumn = input.nextLine();
-        if (collumn.equals("7")) {
+        String fieldToSearch = input.nextLine();
+        String returnToMenu = "7";
+        if (fieldToSearch.equals(returnToMenu)) {
             Start.menu();
-        } else if (collumn.equals("0") || collumn.equals("1") || collumn.equals("2") || collumn.equals("3") || collumn.equals("4") || collumn.equals("5") || collumn.equals("6")) {
+        } else if (Regex.isValidCommand(fieldToSearch, Regex.findTaskMenuRegex)) {
 
             System.out.println("Palavra chave para a pesquisa:");
-            String word = input.nextLine();
-            Crud.search(collumn, word);
+            String name = input.nextLine();
+            taskController.searchTask(fieldToSearch, name, file);
 
             Start.goBack();
         } else {
             System.out.println("Codigo invalido, tente novamente:");
-            collumn = input.nextLine();
-            while (!(collumn.equals("0") || collumn.equals("1") || collumn.equals("2") || collumn.equals("3") || collumn.equals("4") || collumn.equals("5") || collumn.equals("6"))) {
+            fieldToSearch = input.nextLine();
+            while (!(Regex.isValidCommand(fieldToSearch, Regex.findTaskMenuRegex))) {
                 System.out.println("Codigo invalido, tente novamente:");
-                collumn = input.nextLine();
+                fieldToSearch = input.nextLine();
 
             }
         }
