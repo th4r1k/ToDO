@@ -1,6 +1,6 @@
-package todoapp.Service;
+package todoapp.Model.Service;
 
-import todoapp.Entity.Task;
+import todoapp.Model.Entity.Task;
 
 import java.io.File;
 

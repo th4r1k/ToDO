@@ -1,6 +1,6 @@
 package todoapp.Controller;
 
-import todoapp.Service.TaskServiceInterface;
+import todoapp.Model.Service.TaskServiceInterface;
 
 import java.io.File;
 import java.util.List;

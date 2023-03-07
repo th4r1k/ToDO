@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Scanner;
 
 import todoapp.Controller.TaskController;
-import todoapp.Service.TaskService;
+import todoapp.Model.Service.TaskService;
 import todoapp.Utils.Regex;
 
 public class FindTaskView {

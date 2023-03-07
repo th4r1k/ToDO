@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 import todoapp.Controller.AlarmController;
 import todoapp.Controller.TaskController;
-import todoapp.Service.AlarmTaskService;
-import todoapp.Service.TaskService;
+import todoapp.Model.Service.AlarmTaskService;
+import todoapp.Model.Service.TaskService;
 import todoapp.Utils.Validate;
 
 public class DeleteAlarmView {

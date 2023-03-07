@@ -4,19 +4,16 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import todoapp.Controller.CrudTaskController;
-import todoapp.Entity.Task;
-import todoapp.Service.CrudTaskService;
-import todoapp.Service.CrudTaskServiceInterface;
+import todoapp.Model.Entity.Task;
+import todoapp.Model.Service.CrudTaskService;
+import todoapp.Model.Service.CrudTaskServiceInterface;
 
 import java.io.File;
-
-import static org.junit.Assert.*;
 
 public class CrudTaskControllerTest {
 
     static CrudTaskController crudTaskController;
     static CrudTaskServiceInterface crudTaskService;
-
     static File file;
 
     @BeforeAll
@@ -41,6 +38,4 @@ public class CrudTaskControllerTest {
 
 
     }
-
-
 }

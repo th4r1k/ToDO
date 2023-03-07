@@ -6,9 +6,9 @@ import java.util.Scanner;
 import todoapp.Controller.AlarmController;
 import todoapp.Controller.CrudTaskController;
 import todoapp.Controller.TaskController;
-import todoapp.Service.AlarmTaskService;
-import todoapp.Service.CrudTaskService;
-import todoapp.Service.TaskService;
+import todoapp.Model.Service.AlarmTaskService;
+import todoapp.Model.Service.CrudTaskService;
+import todoapp.Model.Service.TaskService;
 
 public class Start {
     public static void menu() {

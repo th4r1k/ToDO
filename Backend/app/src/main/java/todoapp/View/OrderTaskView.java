@@ -2,13 +2,11 @@ package todoapp.View;
 
 import java.io.File;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import todoapp.Controller.CrudTaskController;
 import todoapp.Controller.TaskController;
-import todoapp.Service.CrudTaskService;
-import todoapp.Service.TaskService;
+import todoapp.Model.Service.CrudTaskService;
+import todoapp.Model.Service.TaskService;
 import todoapp.Utils.Regex;
 
 import static todoapp.Utils.Regex.isValidCommand;

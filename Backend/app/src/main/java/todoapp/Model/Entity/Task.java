@@ -1,4 +1,4 @@
-package todoapp.Entity;
+package todoapp.Model.Entity;
 
 public class Task {
     String name;

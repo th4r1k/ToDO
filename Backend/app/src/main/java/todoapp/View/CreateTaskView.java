@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 import todoapp.Controller.CrudTaskController;
 import todoapp.Controller.TaskController;
-import todoapp.Entity.Task;
-import todoapp.Service.CrudTaskService;
-import todoapp.Service.TaskService;
+import todoapp.Model.Entity.Task;
+import todoapp.Model.Service.CrudTaskService;
+import todoapp.Model.Service.TaskService;
 import todoapp.Utils.Validate;
 
 public class CreateTaskView {

@@ -1,10 +1,10 @@
-package todoapp.Service;
+package todoapp.Model.Service;
 
 import java.io.*;
 import java.util.*;
 
 
-import todoapp.Entity.Task;
+import todoapp.Model.Entity.Task;
 
 public class CrudTaskService implements CrudTaskServiceInterface {
 

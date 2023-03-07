@@ -1,7 +1,7 @@
 package todoapp.Controller;
 
-import todoapp.Entity.Task;
-import todoapp.Service.CrudTaskServiceInterface;
+import todoapp.Model.Entity.Task;
+import todoapp.Model.Service.CrudTaskServiceInterface;
 
 import java.io.File;
 

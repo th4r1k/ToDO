@@ -1,6 +1,6 @@
 package todoapp.Controller;
 
-import todoapp.Service.AlarmTaskServiceInterface;
+import todoapp.Model.Service.AlarmTaskServiceInterface;
 
 import java.io.File;
 

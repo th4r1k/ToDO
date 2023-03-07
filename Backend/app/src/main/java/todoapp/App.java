@@ -1,15 +1,12 @@
 package todoapp;
 
 import todoapp.Controller.AlarmController;
-import todoapp.Service.AlarmTaskService;
-import todoapp.Service.CrudTaskService;
+import todoapp.Model.Service.AlarmTaskService;
 import todoapp.View.Start;
 import todoapp.Utils.Persist;
 
 import java.io.File;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class App {
     public static void main(String[] args) throws ParseException {
