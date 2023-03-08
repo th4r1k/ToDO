@@ -1,19 +1,20 @@
 package todoapp.Controller;
 
-import todoapp.Model.Service.AlarmTaskServiceInterface;
+import todoapp.Model.DAO.AlarmTaskDAOInterface;
+import todoapp.Model.Entity.Alarm;
 
 import java.io.File;
 
 public class AlarmController {
 
-    AlarmTaskServiceInterface alarmTask;
+    AlarmTaskDAOInterface alarmTask;
 
-    public AlarmController(AlarmTaskServiceInterface alarmTask) {
+    public AlarmController(AlarmTaskDAOInterface alarmTask) {
         this.alarmTask = alarmTask;
     }
 
-    public void createAlarm(String name, String dateAlarm, String timeAlarm, File file, File alarmFile) {
-        alarmTask.createAlarm(name, dateAlarm, timeAlarm, file, alarmFile);
+    public void createAlarm(Alarm alarm, File file, File alarmFile) {
+        alarmTask.createAlarm(alarm, file, alarmFile);
     }
 
     public void readAlarms(File alarmFile) {

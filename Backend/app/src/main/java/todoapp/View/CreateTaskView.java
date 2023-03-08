@@ -6,9 +6,8 @@ import java.util.Scanner;
 import todoapp.Controller.CrudTaskController;
 import todoapp.Controller.TaskController;
 import todoapp.Model.Entity.Task;
-import todoapp.Model.Service.CrudTaskService;
-import todoapp.Model.Service.TaskService;
-import todoapp.Utils.Validate;
+import todoapp.Model.DAO.CrudTaskDAO;
+import todoapp.Model.DAO.TaskDAO;
 
 public class CreateTaskView {
 
@@ -16,8 +15,8 @@ public class CreateTaskView {
         File file = new File("data/tasks.csv");
         File tempfile = new File("data/temptasks.csv");
 
-        TaskController taskController = new TaskController(new TaskService());
-        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskService());
+        TaskController taskController = new TaskController(new TaskDAO());
+        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskDAO());
 
         Task task = newTaskForm(taskController, file);
 
@@ -33,19 +32,19 @@ public class CreateTaskView {
     public static Task newTaskForm(TaskController taskController, File file) {
         Scanner input = new Scanner(System.in);
 
-        String name = Validate.inputName(input);
+        String name = InputsView.inputName(input);
 
         if (taskController.taskExist(name, file)) {
             System.out.println("________________________________");
             System.out.println("Tarefa ja existe");
             Start.goBack();
         } else {
-            String description = Validate.inputDescription(input);
-            String endDate = Validate.inputDate(input);
-            String endTime = Validate.inputTime(input);
-            String priority = Validate.inputPriority(input);
-            String category = Validate.inputCategory(input);
-            String status = Validate.inputStatus(input);
+            String description = InputsView.inputDescription(input);
+            String endDate = InputsView.inputDate(input);
+            String endTime = InputsView.inputTime(input);
+            String priority = InputsView.inputPriority(input);
+            String category = InputsView.inputCategory(input);
+            String status = InputsView.inputStatus(input);
 
             Task task = new Task(name, description, endDate, endTime, priority, category, status);
             return task;

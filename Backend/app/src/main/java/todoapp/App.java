@@ -1,7 +1,7 @@
 package todoapp;
 
 import todoapp.Controller.AlarmController;
-import todoapp.Model.Service.AlarmTaskService;
+import todoapp.Model.DAO.AlarmTaskDAO;
 import todoapp.View.Start;
 import todoapp.Utils.Persist;
 
@@ -10,11 +10,12 @@ import java.text.ParseException;
 
 public class App {
     public static void main(String[] args) throws ParseException {
-        AlarmController alarmController = new AlarmController(new AlarmTaskService());
+        AlarmController alarmController = new AlarmController(new AlarmTaskDAO());
         File alarmFile = new File("data/alarms.csv");
         File tempAlarmFile = new File("data/tempalarms.csv");
 
-        Persist.createFiles();
+        Persist.createTaskFile();
+        Persist.createAlarmFile();
 
         System.out.println("*** Bem vindo ao ToDoApp ***");
         alarmController.startAlarm(alarmFile, tempAlarmFile);

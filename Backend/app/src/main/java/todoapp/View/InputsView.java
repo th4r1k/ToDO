@@ -1,10 +1,12 @@
-package todoapp.Utils;
+package todoapp.View;
+
+import todoapp.Utils.Regex;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Validate {
+public class InputsView {
 
    public static String inputName(Scanner input){
         System.out.println("Digite o nome da tarefa");

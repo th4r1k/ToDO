@@ -1,15 +1,15 @@
 package todoapp.Controller;
 
-import todoapp.Model.Service.TaskServiceInterface;
+import todoapp.Model.DAO.TaskDAOInterface;
 
 import java.io.File;
 import java.util.List;
 
 public class TaskController {
 
-    TaskServiceInterface taskService;
+    TaskDAOInterface taskService;
 
-    public TaskController(TaskServiceInterface taskService) {
+    public TaskController(TaskDAOInterface taskService) {
         this.taskService = taskService;
     }
 

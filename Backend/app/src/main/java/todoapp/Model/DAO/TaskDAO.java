@@ -1,4 +1,4 @@
-package todoapp.Model.Service;
+package todoapp.Model.DAO;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,7 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class TaskService implements TaskServiceInterface{
+public class TaskDAO implements TaskDAOInterface {
 
     public boolean verify(String name, File file) {
 
@@ -26,7 +26,7 @@ public class TaskService implements TaskServiceInterface{
             }
             reader.close();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("Nao foi possivel verificar a tarefa");
         }
         return found;
     }
@@ -42,7 +42,7 @@ public class TaskService implements TaskServiceInterface{
             }
             reader.close();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("Nao foi possivel ler o arquivo de tarefas e converter para arrays");
         }
         return items;
     }
@@ -51,12 +51,13 @@ public class TaskService implements TaskServiceInterface{
     public void sorter(String fieldToSort, File file, File tempfile) {
         List<List<String>> items = dataToArray(file);
         items.remove(0);
-        Collections.sort(items, new Comparator<List<String>>() {
+        String dateField = "2";
+
+              Collections.sort(items, new Comparator<List<String>>() {
             DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
 
-            @Override
             public int compare(List<String> list1, List<String> list2) {
-                if ((!fieldToSort.equals("2"))) {
+                if ((!fieldToSort.equals(dateField))) {
                     return list1.get(Integer.parseInt(fieldToSort)).toLowerCase().compareTo(list2.get(Integer.parseInt(fieldToSort)).toLowerCase());
                 } else {
                     try {
@@ -66,7 +67,6 @@ public class TaskService implements TaskServiceInterface{
                     }
                 }
             }
-
         });
         try {
             FileWriter pw = new FileWriter(tempfile, true);
@@ -85,7 +85,7 @@ public class TaskService implements TaskServiceInterface{
             tempfile.renameTo(file);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Nao foi possivel ordenar a tarefa");
         }
     }
 
@@ -102,7 +102,7 @@ public class TaskService implements TaskServiceInterface{
             }
             reader.close();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("Erro ao procurar a tarefa");
         }
     }
 
@@ -128,7 +128,7 @@ public class TaskService implements TaskServiceInterface{
             System.out.println("itens concluidos(Done): " + done);
             reader.close();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("Nao ao totalizar as tarefa");
         }
     }
 }

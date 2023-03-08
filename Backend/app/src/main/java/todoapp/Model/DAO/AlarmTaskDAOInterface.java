@@ -1,10 +1,12 @@
-package todoapp.Model.Service;
+package todoapp.Model.DAO;
+
+import todoapp.Model.Entity.Alarm;
 
 import java.io.File;
 
-public interface AlarmTaskServiceInterface {
+public interface AlarmTaskDAOInterface {
 
-    void createAlarm(String name, String dateAlarm, String timeAlarm, File file, File alarmFile);
+    void createAlarm(Alarm alarm, File file, File alarmFile);
     void readAlarms(File alarmFile);
     void deleteAlarm(String name, File alarmFile, File tempAlarmFile);
     boolean verifyAlarm(String name, File alarmFile);

@@ -5,33 +5,47 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Persist {
-    public static void createFiles() {
+    public static void createTaskFile() {
         try {
             File path = new File("data");
             path.mkdir();
-            File tasks = new File("data/tasks.csv");
-            File alarms = new File("data/alarms.csv");
-            if (tasks.createNewFile()) {
-                System.out.println("File created: " + tasks.getName());
-            }
-            if (alarms.createNewFile()) {
-                System.out.println("File created: " + alarms.getName());
-            }
-            createFilesHeaders(tasks, alarms);
+            File tasksFile = new File("data/tasks.csv");
 
+            if (tasksFile.createNewFile()) {
+                System.out.println("File created: " + tasksFile.getName());
+            }
+            createTaskFileHeader(tasksFile);
         } catch (IOException e) {
             System.out.println("An error occurred.");
         }
     }
 
-    public static void createFilesHeaders(File tasks, File alarms) throws IOException {
-        FileWriter pw = new FileWriter(tasks, true);
+    public static void createAlarmFile() {
+        try {
+            File path = new File("data");
+            path.mkdir();
+            File alarmsFile = new File("data/alarms.csv");
 
-        if (tasks.length() == 0) {
+            if (alarmsFile.createNewFile()) {
+                System.out.println("File created: " + alarmsFile.getName());
+            }
+            createAlarmFileHeader(alarmsFile);
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+        }
+    }
+
+    public static void createTaskFileHeader(File tasksFile) throws IOException {
+        FileWriter pw = new FileWriter(tasksFile, true);
+        if (tasksFile.length() == 0) {
             pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "EndTime" + "," + "Priority" + "," + "Category" + "," + "Status");
             pw.append("\n");
         }
-        if (alarms.length() == 0) {
+        pw.close();
+    }
+    public static void createAlarmFileHeader(File alarmsFile) throws IOException {
+        FileWriter pw = new FileWriter(alarmsFile, true);
+        if (alarmsFile.length() == 0) {
             pw.write("ToDo`s Name" + "," + "AlarmDate" + "," + "AlarmTime" + "," + "EndDate" + "," + "EndTime" + "," + "Priority");
             pw.append("\n");
         }

@@ -5,22 +5,21 @@ import java.util.Scanner;
 
 import todoapp.Controller.AlarmController;
 import todoapp.Controller.TaskController;
-import todoapp.Model.Service.AlarmTaskService;
-import todoapp.Model.Service.TaskService;
-import todoapp.Utils.Validate;
+import todoapp.Model.DAO.AlarmTaskDAO;
+import todoapp.Model.DAO.TaskDAO;
 
 public class DeleteAlarmView {
 
     public static void menu() {
-        AlarmController alarmController = new AlarmController(new AlarmTaskService());
-        TaskController taskController = new TaskController(new TaskService());
+        AlarmController alarmController = new AlarmController(new AlarmTaskDAO());
+        TaskController taskController = new TaskController(new TaskDAO());
         File file = new File("data/tasks.csv");
         File alarmFile = new File("data/alarms.csv");
         File tempAlarmFile = new File("data/tempalarms.csv");
 
         Scanner input = new Scanner(System.in);
 
-        String alarmToDelete = Validate.inputAlarm(input);
+        String alarmToDelete = InputsView.inputAlarm(input);
         if (!taskController.taskExist(alarmToDelete, file)) {
             System.out.println("Tarefa nao encontrada");
             Start.goBack();

@@ -6,17 +6,16 @@ import java.util.Scanner;
 import todoapp.Controller.AlarmController;
 import todoapp.Controller.CrudTaskController;
 import todoapp.Controller.TaskController;
-import todoapp.Model.Service.AlarmTaskService;
-import todoapp.Model.Service.CrudTaskService;
-import todoapp.Model.Service.TaskService;
+import todoapp.Model.DAO.AlarmTaskDAO;
+import todoapp.Model.DAO.CrudTaskDAO;
+import todoapp.Model.DAO.TaskDAO;
 import todoapp.Utils.Regex;
-import todoapp.Utils.Validate;
 
 public class EditTaskView {
     public static void menu() {
-        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskService());
-        AlarmController alarmController = new AlarmController(new AlarmTaskService());
-        TaskController taskController = new TaskController(new TaskService());
+        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskDAO());
+        AlarmController alarmController = new AlarmController(new AlarmTaskDAO());
+        TaskController taskController = new TaskController(new TaskDAO());
         File file = new File("data/tasks.csv");
         File tempfile = new File("data/temptasks.csv");
         File alarmFile = new File("data/alarms.csv");
@@ -24,7 +23,7 @@ public class EditTaskView {
         crudTaskController.readAllTasks(file);
 
         Scanner input = new Scanner(System.in);
-        String nameToEdit = Validate.inputEditTask(input);
+        String nameToEdit = InputsView.inputEditTask(input);
 
         if (!taskController.taskExist(nameToEdit, file)) {
             System.out.println("Tarefa nao encontrada");
@@ -62,13 +61,13 @@ public class EditTaskView {
                     Start.goBack();
                 }
             } else if (field.equals(endDateOption)) {
-                newdata = Validate.inputDate(input);
+                newdata = InputsView.inputDate(input);
             } else if (field.equals(endTimeOption)) {
-                newdata = Validate.inputTime(input);
+                newdata = InputsView.inputTime(input);
             } else if (field.equals(priorityOption)) {
-                newdata = Validate.inputPriority(input);
+                newdata = InputsView.inputPriority(input);
             } else if (field.equals(statusOption)) {
-                newdata = Validate.inputStatus(input);
+                newdata = InputsView.inputStatus(input);
             } else {
                 System.out.println("Insira o novo valor:");
                 newdata = input.nextLine();

@@ -6,12 +6,17 @@ import java.util.Scanner;
 import todoapp.Controller.AlarmController;
 import todoapp.Controller.CrudTaskController;
 import todoapp.Controller.TaskController;
-import todoapp.Model.Service.AlarmTaskService;
-import todoapp.Model.Service.CrudTaskService;
-import todoapp.Model.Service.TaskService;
+import todoapp.Model.DAO.AlarmTaskDAO;
+import todoapp.Model.DAO.CrudTaskDAO;
+import todoapp.Model.DAO.TaskDAO;
 
 public class Start {
     public static void menu() {
+        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskDAO());
+        AlarmController alarmController = new AlarmController(new AlarmTaskDAO());
+        TaskController taskController = new TaskController(new TaskDAO());
+        File file = new File("data/tasks.csv");
+        File alarmFile = new File("data/alarms.csv");
 
         System.out.println("1 - Criar nova tarefa");
         System.out.println("2 - Ver todas tarefas");
@@ -27,14 +32,10 @@ public class Start {
 
         System.out.println("Digite o codigo do comando: ");
         Scanner input = new Scanner(System.in);
-        String data = input.nextLine();
-        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskService());
-        AlarmController alarmController = new AlarmController(new AlarmTaskService());
-        TaskController taskController = new TaskController(new TaskService());
-        File file = new File("data/tasks.csv");
-        File alarmFile = new File("data/alarms.csv");
+        String command = input.nextLine();
 
-        switch (data) {
+
+        switch (command) {
             case "1":
                 CreateTaskView.menu();
                 break;
@@ -90,8 +91,8 @@ public class Start {
         System.out.println("________________________________");
         System.out.println("Digite 1 para voltar ao menu");
         Scanner input = new Scanner(System.in);
-        String data = input.nextLine();
-        switch (data) {
+        String command = input.nextLine();
+        switch (command) {
             case "1":
                 menu();
                 break;

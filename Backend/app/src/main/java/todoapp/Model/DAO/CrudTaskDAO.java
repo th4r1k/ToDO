@@ -1,4 +1,4 @@
-package todoapp.Model.Service;
+package todoapp.Model.DAO;
 
 import java.io.*;
 import java.util.*;
@@ -6,9 +6,10 @@ import java.util.*;
 
 import todoapp.Model.Entity.Task;
 
-public class CrudTaskService implements CrudTaskServiceInterface {
+public class CrudTaskDAO implements CrudTaskDAOInterface {
 
-    public void create(Task task, File file) {
+    public boolean create(Task task, File file) {
+        boolean isOk = false;
 
         try (FileWriter pw = new FileWriter(file, true)) {
             if (file.length() == 0) {
@@ -23,25 +24,31 @@ public class CrudTaskService implements CrudTaskServiceInterface {
             pw.write(task.getCategory() + ",");
             pw.write(task.getStatus());
             pw.append("\n");
+            isOk = true;
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Nao foi possivel criar a tarefa");
         }
+        return isOk;
     }
 
-    public void read(File file) {
+    public boolean read(File file) {
+        boolean isOk = false;
         try {
             Scanner reader = new Scanner(file);
             while (reader.hasNextLine()) {
                 System.out.println(reader.nextLine());
             }
             reader.close();
+            isOk = true;
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("Nao foi possivel ler a tarefa");
         }
+        return isOk;
     }
 
-    public void update(String name, int field, String newData, File file, File tempfile) {
+    public boolean update(String name, int field, String newData, File file, File tempfile) {
+        boolean isOk= false;
         try {
             FileWriter pw = new FileWriter(tempfile, true);
             Scanner reader = new Scanner(file);
@@ -79,14 +86,14 @@ public class CrudTaskService implements CrudTaskServiceInterface {
             pw.close();
             file.delete();
             tempfile.renameTo(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            isOk=true;
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            System.out.println("Nao foi possivel editar a tarefa");        }
+        return isOk;
     }
 
-    public void delete(String name, File file, File tempfile) {
+    public boolean delete(String name, File file, File tempfile) {
+        boolean isOk= false;
         try {
             FileWriter pw = new FileWriter(tempfile, true);
             Scanner reader = new Scanner(file);
@@ -103,10 +110,10 @@ public class CrudTaskService implements CrudTaskServiceInterface {
             pw.close();
             file.delete();
             tempfile.renameTo(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            isOk = true;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Nao foi possivel deletar a tarefa");
         }
+        return isOk;
     }
 }

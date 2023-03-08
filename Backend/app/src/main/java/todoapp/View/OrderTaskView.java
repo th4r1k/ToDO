@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 import todoapp.Controller.CrudTaskController;
 import todoapp.Controller.TaskController;
-import todoapp.Model.Service.CrudTaskService;
-import todoapp.Model.Service.TaskService;
+import todoapp.Model.DAO.CrudTaskDAO;
+import todoapp.Model.DAO.TaskDAO;
 import todoapp.Utils.Regex;
 
 import static todoapp.Utils.Regex.isValidCommand;
@@ -15,8 +15,8 @@ public class OrderTaskView {
 
     public static void menu() {
         Scanner input = new Scanner(System.in);
-        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskService());
-        TaskController taskController = new TaskController(new TaskService());
+        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskDAO());
+        TaskController taskController = new TaskController(new TaskDAO());
         File file = new File("data/tasks.csv");
         File tempfile = new File("data/temptasks.csv");
 

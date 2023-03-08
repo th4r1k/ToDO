@@ -1,4 +1,6 @@
-package todoapp.Model.Service;
+package todoapp.Model.DAO;
+
+import todoapp.Model.Entity.Alarm;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,38 +12,37 @@ import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class AlarmTaskService implements AlarmTaskServiceInterface {
-    public void createAlarm(String name, String dateAlarm, String timeAlarm, File file, File alarmFile) {
-        String endDate = "" ;
-        String endTime = "" ;
-        String priority = "" ;
+public class AlarmTaskDAO implements AlarmTaskDAOInterface {
+    public void createAlarm(Alarm alarm, File file, File alarmFile) {
+        String endDate = "";
+        String endTime = "";
+        String priority = "";
         try {
             Scanner reader = new Scanner(file);
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
                 String firstParam = line.split(",")[0];
-                if (firstParam.contentEquals(name)) {
+                if (firstParam.contentEquals(alarm.getName())) {
                     endDate = line.split(",")[2];
                     endTime = line.split(",")[3];
                     priority = line.split(",")[4];
                 }
             }
             reader.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        try (FileWriter pw = new FileWriter(alarmFile, true)) {
+            FileWriter pw = new FileWriter(alarmFile, true);
+            if (!(endDate.equals(""))) {
+                pw.write(alarm.getName() + ",");
+                pw.write(alarm.getDateAlarm() + ",");
+                pw.write(alarm.getTimeAlarm() + ",");
+                pw.write(endDate + ",");
+                pw.write(endTime + ",");
+                pw.write(priority);
+                pw.append("\n");
+            }
 
-            if (!(endDate.equals("")))
-                pw.write(name + ",");
-            pw.write(dateAlarm + ",");
-            pw.write(timeAlarm + ",");
-            pw.write(endDate + ",");
-            pw.write(endTime + ",");
-            pw.write(priority);
-            pw.append("\n");
+            pw.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Não foi possível criar o alarme");
         }
     }
 
@@ -54,7 +55,7 @@ public class AlarmTaskService implements AlarmTaskServiceInterface {
             }
             reader.close();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("Não foi possível ler o alarme");
         }
     }
 
@@ -77,10 +78,8 @@ public class AlarmTaskService implements AlarmTaskServiceInterface {
             alarmFile.delete();
             tempAlaramFile.renameTo(alarmFile);
 
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Não foi possível deletar o alarme");
         }
     }
 
@@ -97,7 +96,7 @@ public class AlarmTaskService implements AlarmTaskServiceInterface {
             }
             reader.close();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("Não foi possível verificar o alarme");
         }
         return found;
     }
@@ -149,10 +148,8 @@ public class AlarmTaskService implements AlarmTaskServiceInterface {
             pw.close();
             alarmFile.delete();
             tempAlarmFile.renameTo(alarmFile);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Não foi possível atualizar o alarme");
         }
     }
 
@@ -192,12 +189,10 @@ public class AlarmTaskService implements AlarmTaskServiceInterface {
                 }
             }
             reader.close();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | NoSuchElementException e) {
             System.out.println("Houve um problema ao criar o arquivo alarms.csv");
         } catch (ParseException e) {
             e.printStackTrace();
-        } catch (NoSuchElementException e) {
-            System.out.println("Houve um problema ao criar o arquivo alarms.csv");
         }
     }
 }
