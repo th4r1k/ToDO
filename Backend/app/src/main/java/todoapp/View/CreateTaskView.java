@@ -25,7 +25,7 @@ public class CreateTaskView {
             taskController.sortTask("4", file, tempfile);
             System.out.println("________________________________");
             System.out.println("Tarefa cadastrada com sucesso!");
-            Start.menu();
+            Start.goBack();
         }
     }
 
