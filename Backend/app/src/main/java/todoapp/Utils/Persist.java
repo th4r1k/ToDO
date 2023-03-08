@@ -3,34 +3,52 @@ package todoapp.Utils;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
 public class Persist {
-    public static void createFiles() {
+    public static void createTaskFile() {
         try {
             File path = new File("data");
             path.mkdir();
-            File todos = new File("data/todos.csv");
-            File alarms = new File("data/alarms.csv");
-            FileWriter pw = new FileWriter(todos, true);
-            if (todos.createNewFile()) {
-                System.out.println("File created: " + todos.getName());
+            File tasksFile = new File("data/tasks.csv");
+
+            if (tasksFile.createNewFile()) {
+                System.out.println("File created: " + tasksFile.getName());
             }
-            // else {
-            //     System.out.println("File already exists.");
-            // }
-            if (alarms.createNewFile()) {
-                System.out.println("File created: " + alarms.getName());
-            }
-            // else {
-            //     System.out.println("File already exists.");
-            // }
-                if (todos.length() == 0) {
-                    pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "EndTime" + "," + "Priority" + "," + "Category" + "," + "Status");
-                    pw.append("\n");
-                }
-            pw.close();
+            createTaskFileHeader(tasksFile);
         } catch (IOException e) {
             System.out.println("An error occurred.");
-            // e.printStackTrace();
         }
+    }
+
+    public static void createAlarmFile() {
+        try {
+            File path = new File("data");
+            path.mkdir();
+            File alarmsFile = new File("data/alarms.csv");
+
+            if (alarmsFile.createNewFile()) {
+                System.out.println("File created: " + alarmsFile.getName());
+            }
+            createAlarmFileHeader(alarmsFile);
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+        }
+    }
+
+    public static void createTaskFileHeader(File tasksFile) throws IOException {
+        FileWriter pw = new FileWriter(tasksFile, true);
+        if (tasksFile.length() == 0) {
+            pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "EndTime" + "," + "Priority" + "," + "Category" + "," + "Status");
+            pw.append("\n");
+        }
+        pw.close();
+    }
+    public static void createAlarmFileHeader(File alarmsFile) throws IOException {
+        FileWriter pw = new FileWriter(alarmsFile, true);
+        if (alarmsFile.length() == 0) {
+            pw.write("ToDo`s Name" + "," + "AlarmDate" + "," + "AlarmTime" + "," + "EndDate" + "," + "EndTime" + "," + "Priority");
+            pw.append("\n");
+        }
+        pw.close();
     }
 }

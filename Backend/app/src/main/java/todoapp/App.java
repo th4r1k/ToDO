@@ -1,16 +1,24 @@
 package todoapp;
 
-import todoapp.Service.Crud;
-import todoapp.Utils.Menu.Start;
+import todoapp.Controller.AlarmController;
+import todoapp.Model.DAO.AlarmTaskDAO;
+import todoapp.View.Start;
 import todoapp.Utils.Persist;
 
-public class App {
-    public static void main(String[] args) {
+import java.io.File;
+import java.text.ParseException;
 
-        Persist.createFiles();
+public class App {
+    public static void main(String[] args) throws ParseException {
+        AlarmController alarmController = new AlarmController(new AlarmTaskDAO());
+        File alarmFile = new File("data/alarms.csv");
+        File tempAlarmFile = new File("data/tempalarms.csv");
+
+        Persist.createTaskFile();
+        Persist.createAlarmFile();
 
         System.out.println("*** Bem vindo ao ToDoApp ***");
-        Crud.alarm();
+        alarmController.startAlarm(alarmFile, tempAlarmFile);
         Start.menu();
 
     }
