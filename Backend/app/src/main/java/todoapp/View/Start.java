@@ -17,7 +17,67 @@ public class Start {
         TaskController taskController = new TaskController(new TaskDAO());
         File file = new File("data/tasks.csv");
         File alarmFile = new File("data/alarms.csv");
+        Scanner input = new Scanner(System.in);
+        boolean quit = false;
 
+        showMenu();
+        while (!quit) {
+        String command = input.nextLine();
+
+            switch (command) {
+                case "1":
+                    CreateTaskView.menu();
+                    break;
+                case "2": {
+                    System.out.println("________________________________");
+                    crudTaskController.readAllTasks(file);
+                    goBack();
+                    break;
+                }
+                case "3":
+                    EditTaskView.menu();
+                    break;
+                case "4":
+                    DeleteTaskView.menu();
+                    break;
+                case "5":
+                    OrderTaskView.menu();
+                    break;
+                case "6":
+                    FindTaskView.menu();
+                    break;
+                case "7": {
+                    taskController.countTasks(file);
+                    goBack();
+                    break;
+                }
+                case "8": {
+                    CreateAlarmView.menu();
+                    break;
+                }
+                case "9": {
+                    System.out.println("________________________________");
+                    alarmController.readAlarms(alarmFile);
+                    goBack();
+                    break;
+                }
+                case "10":
+                    DeleteAlarmView.menu();
+                    break;
+                case "0": {
+                    quit = true;
+                    input.close();
+                    System.out.println("Volte sempre!");
+                    break;
+                }
+                default:
+                    System.out.println("Opcao invalida");
+                    menu();
+            }
+        }
+    }
+
+    public static void showMenu(){
         System.out.println("1 - Criar nova tarefa");
         System.out.println("2 - Ver todas tarefas");
         System.out.println("3 - Editar tarefa");
@@ -29,61 +89,7 @@ public class Start {
         System.out.println("9 - Ver Alarme");
         System.out.println("10 - Deletar Alarme");
         System.out.println("0 - Sair");
-
         System.out.println("Digite o codigo do comando: ");
-        Scanner input = new Scanner(System.in);
-        String command = input.nextLine();
-
-
-        switch (command) {
-            case "1":
-                CreateTaskView.menu();
-                break;
-            case "2": {
-                System.out.println("________________________________");
-                crudTaskController.readAllTasks(file);
-                goBack();
-                break;
-            }
-            case "3":
-                EditTaskView.menu();
-                break;
-            case "4":
-                DeleteTaskView.menu();
-                break;
-            case "5":
-                OrderTaskView.menu();
-                break;
-            case "6":
-                FindTaskView.menu();
-                break;
-            case "7": {
-                taskController.countTasks(file);
-                goBack();
-                break;
-            }
-            case "8": {
-                CreateAlarmView.menu();
-                break;
-            }
-            case "9": {
-                System.out.println("________________________________");
-                alarmController.readAlarms(alarmFile);
-                goBack();
-                break;
-            }
-            case "10":
-                DeleteAlarmView.menu();
-                break;
-            case "0": {
-                input.close();
-                System.out.println("Volte sempre!");
-                break;
-            }
-            default:
-                System.out.println("Opcao invalida");
-                menu();
-        }
     }
 
     public static void goBack() {
@@ -94,7 +100,7 @@ public class Start {
         String command = input.nextLine();
         switch (command) {
             case "1":
-                menu();
+                showMenu();
                 break;
             default:
                 input.close();

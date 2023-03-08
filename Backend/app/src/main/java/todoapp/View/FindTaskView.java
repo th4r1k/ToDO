@@ -28,7 +28,7 @@ public class FindTaskView {
         String fieldToSearch = input.nextLine();
         String returnToMenu = "7";
         if (fieldToSearch.equals(returnToMenu)) {
-            Start.menu();
+            Start.showMenu();
         } else if (Regex.isValidCommand(fieldToSearch, Regex.findTaskMenuRegex)) {
 
             System.out.println("Palavra chave para a pesquisa:");

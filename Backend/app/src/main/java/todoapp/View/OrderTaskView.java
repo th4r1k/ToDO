@@ -35,7 +35,7 @@ public class OrderTaskView {
         String returnToMenu = "7";
 
         if (fieldToSort.equals(returnToMenu)) {
-            Start.menu();
+            Start.showMenu();
         } else if (isValidCommand(fieldToSort, Regex.orderTaskMenuRegex)) {
             taskController.sortTask(fieldToSort, file, tempfile);
             System.out.println("Lista reordenada com sucesso");
