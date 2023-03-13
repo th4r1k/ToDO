@@ -25,11 +25,11 @@ const insertDataIntoTable = document.getElementById("insertDataIntoTable");
 multipleOptions = document.getElementById("multipleOptions");
 multipleChange = document.getElementById("multipleChange");
 
-let todos = [];
+let tasks = [];
 
 if (localStorage.getItem("todoList")) {
-  todos = JSON.parse(localStorage.getItem("todoList"));
-  renderTodos(todos);
+  tasks = JSON.parse(localStorage.getItem("todoList"));
+  renderTodos(tasks);
 }
 
 const clearFields = () => {
@@ -52,7 +52,7 @@ const clearEditFields = () => {
   editStatus.options.selectedIndex = "";
 };
 
-const switchModal = () => {
+const switchCreateModal = () => {
   const addStatus = addModal.style.display;
   if (addStatus == "block") {
     addModal.style.display = "none";
@@ -64,19 +64,19 @@ const switchModal = () => {
 };
 
 const addBtn = document.querySelector(".addBtn");
-addBtn.addEventListener("click", switchModal);
+addBtn.addEventListener("click", switchCreateModal);
 
 window.onclick = function (event) {
   const addModal = document.querySelector(".modalAdd");
   const edtModal = document.querySelector(".modalEdt");
   if (event.target == addModal) {
-    switchModal();
+    switchCreateModal();
   } else if (event.target == edtModal) {
-    switchedtModal();
+    switchEditModal();
   }
 };
 
-const switchedtModal = () => {
+const switchEditModal = () => {
   const edtStatus = edtModal.style.display;
   if (edtStatus == "block") {
     edtModal.style.display = "none";
@@ -92,14 +92,14 @@ const verifyEditClick = () => {
       "Para editar é preciso que antes clique no botao laranja do item que quer editar"
     );
   } else {
-    switchedtModal();
+    switchEditModal();
   }
 };
 
 const edtBtn = document.querySelector(".edtBtn");
 edtBtn?.addEventListener("click", verifyEditClick);
 
-const add = function () {
+const addTask = function () {
   if (
     validadeTask(
       name.value,
@@ -125,12 +125,13 @@ const add = function () {
         status: statusOption,
       };
 
-      todos.push(todo);
+      tasks.push(todo);
 
-      localStorage.setItem("todoList", JSON.stringify(todos));
+      localStorage.setItem("todoList", JSON.stringify(tasks));
+      sendEmail("Nova tarefa", todo);
 
       clearEditFields();
-      renderTodos(todos);
+      renderTodos(tasks);
       addModal.style.display = "none";
     }
   }
@@ -160,11 +161,11 @@ function renderTodos(todolist) {
 }
 
 const delTodo = function (item) {
-  todos = todos.filter(function (todo) {
+  tasks = tasks.filter(function (todo) {
     return todo.name != item.id;
   });
-  localStorage.setItem("todoList", JSON.stringify(todos));
-  renderTodos(todos);
+  localStorage.setItem("todoList", JSON.stringify(tasks));
+  renderTodos(tasks);
 };
 
 const editTodo = function (td) {
@@ -177,7 +178,7 @@ const editTodo = function (td) {
   editcategory.value = selectedRow.cells[5].innerHTML;
   editStatus.value = selectedRow.cells[6].innerText;
 
-  switchedtModal();
+  switchEditModal();
 };
 
 function update() {
@@ -201,7 +202,7 @@ function update() {
       editStatus.options[editStatus.options.selectedIndex].text;
     edtModal.style.display = "none";
 
-    todos.forEach((todo) => {
+    tasks.forEach((todo) => {
       if (todo.name == editName.value.trim()) {
         todo.description = editDescription.value;
         todo.endDate = editendDate.value;
@@ -212,8 +213,8 @@ function update() {
       }
     });
 
-    localStorage.setItem("todoList", JSON.stringify(todos));
-    renderTodos(todos);
+    localStorage.setItem("todoList", JSON.stringify(tasks));
+    renderTodos(tasks);
 
     clearEditFields();
   }
@@ -245,8 +246,8 @@ const filter = () => {
 
 const verifyTodoExists = (name) => {
   let isOk = true;
-  if (todos) {
-    todos.forEach((todo) => {
+  if (tasks) {
+    tasks.forEach((todo) => {
       if (todo.name == name) {
         isOk = false;
       }
@@ -256,15 +257,15 @@ const verifyTodoExists = (name) => {
 };
 
 const changeMany = () => {
-  todos.forEach((todo) => {
+  tasks.forEach((todo) => {
     if (document.getElementsByClassName(todo.name)[0].checked) {
       if (multipleOptions.value != 0) {
         todo.status = multipleOptions.value;
       }
     }
   });
-  localStorage.setItem("todoList", JSON.stringify(todos));
-  renderTodos(todos);
+  localStorage.setItem("todoList", JSON.stringify(tasks));
+  renderTodos(tasks);
   multipleOptions.value = 0;
 };
 
@@ -319,4 +320,21 @@ function validadeTask(
     }
   }
   return isOk;
+}
+
+
+//EmailService
+function sendEmail(subject,todo) {
+Email.send({
+    Host : "smtp.elasticemail.com",
+    Username : "th4r1k@gmail.com",
+    Password : "94E0CB955C64D7AD21CE2F151F0CE1691585",
+    To : 'th4r1k@gmail.com',
+    From : "th4r1k@gmail.com",
+    Subject : subject,
+    Body : `Nome:${todo.name} Descrição:${todo.description} Data de término:${todo.endDate} Horário de término:${todo.endTime} Prioridade${todo.priority} Categoria:${todo.category} Status:${todo.status}`
+}).then(
+  message => alert(message)
+
+);
 }

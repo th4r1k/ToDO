@@ -12,7 +12,9 @@
     <nav class="">
         <h1>ToDoApp</h1>
     </nav>
-
+    <form method="post">
+        <input type="button" value="Send Email" onclick="sendEmail()"/>
+    </form>  
     <div class="options">
         <button class="addBtn">Adicionar</button>
         <select id="filter">
@@ -53,6 +55,7 @@
     <div class="modalAdd">
         <div class="content">
             <h1>Criar nova Tarefa</h1>
+          
 
             <label>Nome</label>
             <input id="name" type="text" autocomplete="off" maxlength="15" pattern="[A-z]{4,15}" />
@@ -79,7 +82,7 @@
                 <option value="done">done</option>
             </select>
             <br>
-            <button class="addTodo" onclick="add()">Adicionar</button>
+            <button class="addTodo" onclick="addTask()">Adicionar</button>
             <small>(Para cancelar clique fora da janela do modal)</small>
 
         </div>
@@ -121,6 +124,8 @@
     </div>
 
     <script src="index.js"> </script>
+    <script src="https://smtpjs.com/v3/smtp.js">
+    </script>
 </body>
 
 </html>
