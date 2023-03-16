@@ -1,35 +1,35 @@
 package todoapp.View;
 
-import java.io.File;
 import java.util.Scanner;
 
 import todoapp.Controller.AlarmController;
-import todoapp.Controller.CrudTaskController;
 import todoapp.Controller.TaskController;
-import todoapp.Model.DAO.AlarmTaskDAO;
-import todoapp.Model.DAO.CrudTaskDAO;
+import todoapp.Model.DAO.AlarmDAO;
 import todoapp.Model.DAO.TaskDAO;
+import todoapp.Model.Entity.Alarm;
+import todoapp.Model.Entity.Task;
+import todoapp.Model.Service.AlarmService;
+import todoapp.Model.Service.TaskService;
 import todoapp.Utils.Regex;
 
 public class EditTaskView {
     public static void menu() {
-        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskDAO());
-        AlarmController alarmController = new AlarmController(new AlarmTaskDAO());
-        TaskController taskController = new TaskController(new TaskDAO());
-        File file = new File("data/tasks.csv");
-        File tempfile = new File("data/temptasks.csv");
-        File alarmFile = new File("data/alarms.csv");
-        File tempAlarmFile = new File("data/tempalarms.csv");
-        crudTaskController.readAllTasks(file);
+        TaskController taskController = new TaskController(new TaskDAO(), TaskService.getInstance());
+        AlarmController alarmController = new AlarmController(new AlarmDAO(), AlarmService.getInstance());
+
+        taskController.printAllTasks();
 
         Scanner input = new Scanner(System.in);
         String nameToEdit = InputsView.inputEditTask(input);
 
-        if (!taskController.taskExist(nameToEdit, file)) {
+        if (!taskController.verifyTaskExist(nameToEdit)) {
             System.out.println("Tarefa nao encontrada");
             Start.goBack();
 
         } else {
+            Task task = taskController.getTaskByName(nameToEdit);
+            taskController.removeTask(task);
+
             System.out.println("Qual item quer mudar?");
             System.out.println("0- Nome da tarefaa");
             System.out.println("1- Descrição ");
@@ -46,47 +46,60 @@ public class EditTaskView {
                 field = input.nextLine();
             }
             String newdata;
-            String nameOption = "0";
-            String endDateOption = "2";
-            String endTimeOption = "3";
-            String priorityOption = "4";
-            String statusOption = "6";
 
-            if (field.equals(nameOption)) {
-                System.out.println("Insira o novo valor:");
-                newdata = input.nextLine();
-                if (taskController.taskExist(newdata, file)) {
-                    System.out.println("________________________________");
-                    System.out.println("Tarefa ja existe");
-                    Start.goBack();
-                }
-            } else if (field.equals(endDateOption)) {
-                newdata = InputsView.inputDate(input);
-            } else if (field.equals(endTimeOption)) {
-                newdata = InputsView.inputTime(input);
-            } else if (field.equals(priorityOption)) {
-                newdata = InputsView.inputPriority(input);
-            } else if (field.equals(statusOption)) {
-                newdata = InputsView.inputStatus(input);
-            } else {
-                System.out.println("Insira o novo valor:");
-                newdata = input.nextLine();
-                while (newdata == "") {
-                    System.out.println("Campo nao pode ficar vazio");
-                    System.out.println("Insira o novo valor:");
-                    newdata = input.nextLine().toLowerCase();
-                }
+            switch (field) {
+                case "0":
+                    newdata = InputsView.inputName(input);
+                    if (taskController.verifyTaskExist(newdata)) {
+                        System.out.println("________________________________");
+                        System.out.println("Tarefa ja existe");
+                        Start.goBack();
+                    }
+                    task.setName(newdata);
+                    editAlarmName(alarmController, nameToEdit, newdata);
+                    break;
+                case "1":
+                    newdata = InputsView.inputDescription(input);
+                    task.setDescription(newdata);
+                    break;
+                case "2":
+                    newdata = InputsView.inputDate(input);
+                    task.setEndDate(newdata);
+                    break;
+                case "3":
+                    newdata = InputsView.inputTime(input);
+                    task.setEndTime(newdata);
+                    break;
+                case "4":
+                    newdata = InputsView.inputPriority(input);
+                    task.setPriority(newdata);
+                    break;
+                case "5":
+                    newdata = InputsView.inputCategory(input);
+                    task.setCategory(newdata);
+                    break;
+                case "6":
+                    newdata = InputsView.inputStatus(input);
+                    task.setStatus(newdata);
+                    break;
+                default:
+                    break;
             }
-            crudTaskController.updateTask(nameToEdit, Integer.parseInt(field), newdata, file, tempfile);
-            if (alarmController.verifyAlarm(nameToEdit, alarmFile)) {
-                if (Regex.isValidCommand(field, "[02345]")) {
-                    alarmController.updateAlarm(nameToEdit, Integer.parseInt(field), newdata, alarmFile, tempAlarmFile);
-                }
-            }
+            taskController.addTask(task);
+            taskController.save();
+
             System.out.println("Item atualizado com sucesso");
             Start.goBack();
         }
     }
 
-
+    private static void editAlarmName(AlarmController alarmController, String nameToEdit, String newdata) {
+        if (alarmController.verifyAlarmExists(nameToEdit)) {
+            Alarm alarm = alarmController.getAlarmByName(nameToEdit);
+            alarmController.removeAlarm(alarm);
+            alarm.setName(newdata);
+            alarmController.addAlarm(alarm);
+            alarmController.save();
+        }
+    }
 }

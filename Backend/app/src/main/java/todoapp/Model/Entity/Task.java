@@ -1,13 +1,13 @@
 package todoapp.Model.Entity;
 
 public class Task {
-    String name;
-    String description;
-    String endDate;
-    String endTime;
-    String priority;
-    String category;
-    String status;
+    private String name;
+    private String description;
+    private String endDate;
+    private String endTime;
+    private String priority;
+    private String category;
+    private String status;
 
     public Task() {
     }
@@ -51,7 +51,7 @@ public class Task {
     }
 
     public void setEndTime(String endTime) {
-        this.endDate = endTime;
+        this.endTime = endTime;
     }
 
     public String getPriority() {
@@ -79,7 +79,6 @@ public class Task {
     }
 
     public String toString() {
-        // return "Todo{name='" + this.name + "', description='" + this.description + "', endDate='" + this.endDate + "', priority=" + this.priority + ", category='" + this.category + "', status=" + this.status + "}";
-        return this.name + "," + this.description + ", " + this.endDate + "," + this.priority + ",'" + this.category + "'," + this.status;
+        return this.name + "," + this.description + "," + this.endDate + "," + this.endTime + "," + this.priority + "," + this.category + "," + this.status;
     }
 }

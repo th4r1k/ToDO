@@ -5,15 +5,15 @@ import java.util.Scanner;
 
 import todoapp.Controller.TaskController;
 import todoapp.Model.DAO.TaskDAO;
+import todoapp.Model.Service.TaskService;
 import todoapp.Utils.Regex;
 
 public class FindTaskView {
 
     public static void menu() {
         Scanner input = new Scanner(System.in);
-        File file = new File("data/tasks.csv");
+        TaskController taskController = new TaskController(new TaskDAO(), TaskService.getInstance());
 
-        TaskController taskController = new TaskController(new TaskDAO());
         System.out.println("Pesquisar por:");
         System.out.println("0- Nome da tarefa");
         System.out.println("1- Descricao");
@@ -33,7 +33,7 @@ public class FindTaskView {
 
             System.out.println("Palavra chave para a pesquisa:");
             String name = input.nextLine();
-            taskController.searchTask(fieldToSearch, name, file);
+            taskController.search(fieldToSearch, name);
 
             Start.goBack();
         } else {

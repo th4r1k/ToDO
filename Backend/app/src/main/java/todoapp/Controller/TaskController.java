@@ -1,35 +1,61 @@
 package todoapp.Controller;
 
+import todoapp.Model.Entity.Task;
 import todoapp.Model.DAO.TaskDAOInterface;
-
-import java.io.File;
-import java.util.List;
+import todoapp.Model.Service.TaskService;
 
 public class TaskController {
+    TaskDAOInterface taskDAO;
+    TaskService taskService;
 
-    TaskDAOInterface taskService;
-
-    public TaskController(TaskDAOInterface taskService) {
+    public TaskController(TaskDAOInterface taskDAO, TaskService taskService) {
+        this.taskDAO = taskDAO;
         this.taskService = taskService;
     }
 
-    public boolean taskExist(String name, File file) {
-        return taskService.verify(name, file);
+    public void getAllTasks(){
+        taskService.taskList = taskDAO.getAllTasks();
     }
 
-    public List<List<String>> listAllTask(File file) {
-        return taskService.dataToArray(file);
+    public void save(){
+        taskDAO.save(taskService.taskList);
     }
 
-    public void sortTask(String fieldToSort, File file, File tempfile) {
-        taskService.sorter(fieldToSort, file, tempfile);
+    public void addTask(Task task){
+        taskService.addTask(task);
     }
 
-    public void searchTask(String field, String name, File file) {
-        taskService.search(field, name, file);
+    public void removeTask(Task task){
+        taskService.removeTask(task);
     }
 
-    public void countTasks(File file) {
-        taskService.count(file);
+    public boolean verifyTaskExist(String taskName){
+        return taskService.verifyExists(taskName);
+    }
+
+    public Task getTaskByName(String taskName){
+        return taskService.getTaskByName(taskName);
+    }
+
+    public void search(String fieldToSearch, String name){
+        taskService.search(fieldToSearch, name);
+    }
+
+    public void sorter(String fieldToSort){
+        taskService.sorter(fieldToSort);
+    }
+
+    public void sortByPriority(){
+        taskService.sortByPriority();
+    }
+
+    public void countTasks(){
+        taskService.count();
+    }
+
+    public void printAllTasks(){
+        for(Task task : taskService.taskList){
+            System.out.println(task);
+        }
     }
 }

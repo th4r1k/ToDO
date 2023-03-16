@@ -1,40 +1,36 @@
 package todoapp.View;
 
-import java.io.File;
 import java.util.Scanner;
-
-import todoapp.Controller.CrudTaskController;
 import todoapp.Controller.TaskController;
 import todoapp.Model.Entity.Task;
-import todoapp.Model.DAO.CrudTaskDAO;
 import todoapp.Model.DAO.TaskDAO;
+import todoapp.Model.Service.TaskService;
 
 public class CreateTaskView {
 
     public static void menu() {
-        File file = new File("data/tasks.csv");
-        File tempfile = new File("data/temptasks.csv");
 
-        TaskController taskController = new TaskController(new TaskDAO());
-        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskDAO());
+        TaskController taskController = new TaskController(new TaskDAO(), TaskService.getInstance());
 
-        Task task = newTaskForm(taskController, file);
+        Task task = newTaskForm(taskController);
 
         if (task != null) {
-            crudTaskController.createTask(task, file);
-            taskController.sortTask("4", file, tempfile);
+            taskController.addTask(task);
+            taskController.sortByPriority();
+            taskController.save();
+
             System.out.println("________________________________");
             System.out.println("Tarefa cadastrada com sucesso!");
             Start.goBack();
         }
     }
 
-    public static Task newTaskForm(TaskController taskController, File file) {
+    public static Task newTaskForm(TaskController taskController) {
         Scanner input = new Scanner(System.in);
 
         String name = InputsView.inputName(input);
 
-        if (taskController.taskExist(name, file)) {
+        if (taskController.verifyTaskExist(name)) {
             System.out.println("________________________________");
             System.out.println("Tarefa ja existe");
             Start.goBack();
@@ -46,8 +42,7 @@ public class CreateTaskView {
             String category = InputsView.inputCategory(input);
             String status = InputsView.inputStatus(input);
 
-            Task task = new Task(name, description, endDate, endTime, priority, category, status);
-            return task;
+            return new Task(name, description, endDate, endTime, priority, category, status);
         }
         return null;
     }

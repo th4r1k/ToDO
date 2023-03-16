@@ -1,31 +1,33 @@
 package todoapp.View;
 
-import java.io.File;
 import java.util.Scanner;
 
 import todoapp.Controller.AlarmController;
 import todoapp.Controller.TaskController;
-import todoapp.Model.DAO.AlarmTaskDAO;
+import todoapp.Model.DAO.AlarmDAO;
 import todoapp.Model.DAO.TaskDAO;
+import todoapp.Model.Entity.Alarm;
+import todoapp.Model.Service.AlarmService;
+import todoapp.Model.Service.TaskService;
 
 public class DeleteAlarmView {
 
     public static void menu() {
-        AlarmController alarmController = new AlarmController(new AlarmTaskDAO());
-        TaskController taskController = new TaskController(new TaskDAO());
-        File file = new File("data/tasks.csv");
-        File alarmFile = new File("data/alarms.csv");
-        File tempAlarmFile = new File("data/tempalarms.csv");
+        AlarmController alarmController = new AlarmController(new AlarmDAO(), AlarmService.getInstance());
+        TaskController taskController = new TaskController(new TaskDAO(), TaskService.getInstance());
 
         Scanner input = new Scanner(System.in);
 
         String alarmToDelete = InputsView.inputAlarm(input);
-        if (!taskController.taskExist(alarmToDelete, file)) {
+        if (!taskController.verifyTaskExist(alarmToDelete)) {
             System.out.println("Tarefa nao encontrada");
             Start.goBack();
 
         } else {
-            alarmController.deleteAlarm(alarmToDelete, alarmFile, tempAlarmFile);
+            Alarm alarm = alarmController.getAlarmByName(alarmToDelete);
+            alarmController.removeAlarm(alarm);
+            alarmController.save();
+
             System.out.println("Alarme Apagado com sucesso");
             Start.goBack();
         }

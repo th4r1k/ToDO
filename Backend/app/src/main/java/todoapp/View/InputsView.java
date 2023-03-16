@@ -127,4 +127,34 @@ public class InputsView {
         return nameToEdit;
     }
 
+    public static String inputAlarmDate(Scanner input){
+        System.out.println("Data para alarme ser acionado (dia/mes/ano)");
+        String endDate = input.nextLine();
+        Pattern pattern = Pattern.compile(Regex.dateRegex);
+        Matcher matcher = pattern.matcher(endDate);
+        boolean dateOk = matcher.matches();
+        while (!dateOk) {
+            System.out.println("Data precisar ser no formato dd/mm/aaaa");
+            endDate = input.nextLine();
+            matcher = pattern.matcher(endDate);
+            dateOk = matcher.matches();
+        }
+        return endDate;
+    }
+
+    public static String inputAlarmTime(Scanner input){
+        System.out.println("Horario para alarme ser acionado(formato ex.: 23:59) ");
+        String endTime = input.nextLine();
+        Pattern patternTime = Pattern.compile(Regex.timeRegex);
+        Matcher matcherTime = patternTime.matcher(endTime);
+        boolean timeOk = matcherTime.matches();
+        while (!timeOk) {
+            System.out.println("Horario precisar ser no formato (ex.: 23:59)");
+            endTime = input.nextLine();
+            matcherTime = patternTime.matcher(endTime);
+            timeOk = matcherTime.matches();
+        }
+        return endTime;
+    }
+
 }
