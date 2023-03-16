@@ -1,28 +1,26 @@
 package todoapp.View;
 
-import java.io.File;
 import java.util.Scanner;
 
 import todoapp.Controller.AlarmController;
-import todoapp.Controller.CrudTaskController;
 import todoapp.Controller.TaskController;
-import todoapp.Model.DAO.AlarmTaskDAO;
-import todoapp.Model.DAO.CrudTaskDAO;
+import todoapp.Model.DAO.AlarmDAO;
 import todoapp.Model.DAO.TaskDAO;
+import todoapp.Model.Service.AlarmService;
+import todoapp.Model.Service.TaskService;
 
 public class Start {
     public static void menu() {
-        CrudTaskController crudTaskController = new CrudTaskController(new CrudTaskDAO());
-        AlarmController alarmController = new AlarmController(new AlarmTaskDAO());
-        TaskController taskController = new TaskController(new TaskDAO());
-        File file = new File("data/tasks.csv");
-        File alarmFile = new File("data/alarms.csv");
+        TaskController taskController = new TaskController(new TaskDAO(), TaskService.getInstance());
+        AlarmController alarmController = new AlarmController(new AlarmDAO(), AlarmService.getInstance());
         Scanner input = new Scanner(System.in);
         boolean quit = false;
+        taskController.getAllTasks();
+        alarmController.getAllAlarms();
 
         showMenu();
         while (!quit) {
-        String command = input.nextLine();
+            String command = input.nextLine();
 
             switch (command) {
                 case "1":
@@ -30,7 +28,8 @@ public class Start {
                     break;
                 case "2": {
                     System.out.println("________________________________");
-                    crudTaskController.readAllTasks(file);
+                    System.out.println("Name" + "," + "Description" + "," + "EndDate" + "," + "EndTime" + "," + "Priority" + "," + "Category" + "," + "Status");
+                    taskController.printAllTasks();
                     goBack();
                     break;
                 }
@@ -47,7 +46,7 @@ public class Start {
                     FindTaskView.menu();
                     break;
                 case "7": {
-                    taskController.countTasks(file);
+                    taskController.countTasks();
                     goBack();
                     break;
                 }
@@ -57,7 +56,8 @@ public class Start {
                 }
                 case "9": {
                     System.out.println("________________________________");
-                    alarmController.readAlarms(alarmFile);
+                    System.out.println("ToDo`s Name" + "," + "AlarmDate" + "," + "AlarmTime");
+                    alarmController.printAllAlarms();
                     goBack();
                     break;
                 }
@@ -77,7 +77,7 @@ public class Start {
         }
     }
 
-    public static void showMenu(){
+    public static void showMenu() {
         System.out.println("1 - Criar nova tarefa");
         System.out.println("2 - Ver todas tarefas");
         System.out.println("3 - Editar tarefa");

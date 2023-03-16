@@ -1,39 +1,51 @@
 package todoapp.Controller;
 
-import todoapp.Model.DAO.AlarmTaskDAOInterface;
+import todoapp.Model.DAO.AlarmDAOInterface;
 import todoapp.Model.Entity.Alarm;
-
-import java.io.File;
+import todoapp.Model.Service.AlarmService;
 
 public class AlarmController {
 
-    AlarmTaskDAOInterface alarmTask;
+    AlarmDAOInterface alarmDAO;
+    AlarmService alarmService;
 
-    public AlarmController(AlarmTaskDAOInterface alarmTask) {
-        this.alarmTask = alarmTask;
+    public AlarmController(AlarmDAOInterface alarmTask, AlarmService alarmService) {
+        this.alarmDAO = alarmTask;
+        this.alarmService = alarmService;
     }
 
-    public void createAlarm(Alarm alarm, File file, File alarmFile) {
-        alarmTask.createAlarm(alarm, file, alarmFile);
+    public void getAllAlarms(){
+        alarmService.alarmList = alarmDAO.getAllAlarms();
     }
 
-    public void readAlarms(File alarmFile) {
-        alarmTask.readAlarms(alarmFile);
+    public void save(){
+        alarmDAO.save(alarmService.alarmList);
     }
 
-    public void deleteAlarm(String name, File alarmFile, File tempAlarmFile) {
-        alarmTask.deleteAlarm(name, alarmFile, tempAlarmFile);
+    public void addAlarm(Alarm alarm){
+        alarmService.addAlarm(alarm);
     }
 
-    public boolean verifyAlarm(String name, File alarmFile) {
-        return alarmTask.verifyAlarm(name, alarmFile);
+    public void removeAlarm(Alarm alarm){
+        alarmService.removeAlarm(alarm);
     }
 
-    public void updateAlarm(String name, int todoField, String newData, File alarmFile, File tempAlarmFile) {
-        alarmTask.updateAlarm(name, todoField, newData, alarmFile, tempAlarmFile);
+    public void checkAlarms(){
+        alarmService.checkAlarms();
     }
 
-    public void startAlarm(File alarmFile, File tempAlarmFile) {
-        alarmTask.alarm(alarmFile, tempAlarmFile);
+    public boolean verifyAlarmExists(String alarmName){
+       return alarmService.verifyAlarmExist(alarmName);
     }
+
+    public Alarm getAlarmByName(String alarmName){
+        return alarmService.getAlarmByName(alarmName);
+    }
+
+    public void printAllAlarms(){
+        for(Alarm alarm : alarmService.alarmList){
+            System.out.println(alarm);
+        }
+    }
+
 }

@@ -1,134 +1,44 @@
 package todoapp.Model.DAO;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.*;
 import java.util.*;
 
+import todoapp.Model.Entity.Task;
+
 public class TaskDAO implements TaskDAOInterface {
+    final private File taskFile = new File("data/tasks.csv");
 
-    public boolean verify(String name, File file) {
-
-        boolean found = false;
+    public List<Task> getAllTasks() {
+        List<Task> taskList = new ArrayList<>();
         try {
-            Scanner reader = new Scanner(file);
-
+            Scanner reader = new Scanner(taskFile);
+            reader.nextLine();
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
-                String firstParam = line.split(",")[0];
-                if (firstParam.contentEquals(name)) {
-                    found = true;
-                }
-            }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Nao foi possivel verificar a tarefa");
-        }
-        return found;
-    }
-
-
-    public List<List<String>> dataToArray(File file) {
-        List<List<String>> items = new ArrayList<>();
-        try {
-            Scanner reader = new Scanner(file);
-            while (reader.hasNextLine()) {
-                String line = reader.nextLine();
-                items.add(Arrays.asList(line.split(",")));
+                String[] array = line.split((","));
+                Task task = new Task(array[0], array[1], array[2], array[3], array[4], array[5], array[6]);
+                taskList.add(task);
             }
             reader.close();
         } catch (FileNotFoundException e) {
             System.out.println("Nao foi possivel ler o arquivo de tarefas e converter para arrays");
         }
-        return items;
+        return taskList;
     }
 
+    public void save(List<Task> taskList) {
+        taskFile.delete();
+        try (FileWriter pw = new FileWriter(taskFile, true)) {
 
-    public void sorter(String fieldToSort, File file, File tempfile) {
-        List<List<String>> items = dataToArray(file);
-        items.remove(0);
-        String dateField = "2";
+                pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "EndTime" + "," + "Priority" + "," + "Category" + "," + "Status");
+                pw.append("\n");
 
-              Collections.sort(items, new Comparator<List<String>>() {
-            DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
-
-            public int compare(List<String> list1, List<String> list2) {
-                if ((!fieldToSort.equals(dateField))) {
-                    return list1.get(Integer.parseInt(fieldToSort)).toLowerCase().compareTo(list2.get(Integer.parseInt(fieldToSort)).toLowerCase());
-                } else {
-                    try {
-                        return dateFormat.parse(list1.get(Integer.parseInt(fieldToSort))).compareTo(dateFormat.parse(list2.get(Integer.parseInt(fieldToSort))));
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
-        try {
-            FileWriter pw = new FileWriter(tempfile, true);
-            pw.write("Name" + "," + "Description" + "," + "EndDate" + "," + "EndTime" + "," + "Priority" + "," + "Category" + "," + "Status");
-            pw.append("\n");
-            for (int i = 0; i < items.size(); i++) {
-                for (int j = 0; j < items.get(i).size(); j++) {
-                    pw.write(items.get(i).get(j));
-                    if (j != items.get(i).size() - 1)
-                        pw.write(",");
-                }
+            for(Task task : taskList){
+                pw.write(task.toString());
                 pw.append("\n");
             }
-            pw.close();
-            file.delete();
-            tempfile.renameTo(file);
-
         } catch (IOException e) {
-            System.out.println("Nao foi possivel ordenar a tarefa");
-        }
-    }
-
-
-    public void search(String fieldToSearch, String name, File file) {
-        try {
-            Scanner reader = new Scanner(file);
-            while (reader.hasNextLine()) {
-                String line = reader.nextLine();
-                String firstParam = line.split(",")[Integer.parseInt(fieldToSearch)];
-                if (firstParam.contains(name)) {
-                    System.out.println(line);
-                }
-            }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Erro ao procurar a tarefa");
-        }
-    }
-
-    public void count(File file) {
-        int todo = 0;
-        int doing = 0;
-        int done = 0;
-        try {
-            Scanner reader = new Scanner(file);
-            while (reader.hasNextLine()) {
-                String line = reader.nextLine();
-                String firstParam = line.split(",")[6];
-                if (firstParam.equals("todo")) {
-                    todo++;
-                } else if (firstParam.equals("doing")) {
-                    doing++;
-                } else if (firstParam.equals("done")) {
-                    done++;
-                }
-            }
-            System.out.println("itens a fazer(ToDo): " + todo);
-            System.out.println("itens em andamento(Doing): " + doing);
-            System.out.println("itens concluidos(Done): " + done);
-            reader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Nao ao totalizar as tarefa");
+            throw new RuntimeException(e);
         }
     }
 }

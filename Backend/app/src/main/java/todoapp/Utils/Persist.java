@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Persist {
+
+
     public static void createTaskFile() {
         try {
             File path = new File("data");
@@ -46,7 +48,7 @@ public class Persist {
     public static void createAlarmFileHeader(File alarmsFile) throws IOException {
         FileWriter pw = new FileWriter(alarmsFile, true);
         if (alarmsFile.length() == 0) {
-            pw.write("ToDo`s Name" + "," + "AlarmDate" + "," + "AlarmTime" + "," + "EndDate" + "," + "EndTime" + "," + "Priority");
+            pw.write("ToDo`s Name" + "," + "AlarmDate" + "," + "AlarmTime");
             pw.append("\n");
         }
         pw.close();
